@@ -10,7 +10,7 @@
            className="flex flex-row justify-between h-[56px] mb-6">
         <div className="flex flex-row">
           <div className="text-[16px] font-semibold text-left mb-[16px] mr-[20px] my-auto">
-            Cashback history
+            {{ $t('cashback') }} {{ $t('history') }}
           </div>
         </div>
         <div className="flex flex-row">
@@ -35,7 +35,7 @@
           </tr>
         </thead>
         <tbody className="font-light">
-          <cashback-table-item-component :obj="this.objeto" />
+          <!-- <cashback-table-item-component :obj="this.objeto" /> -->
         </tbody>
       </table>
     </div>
@@ -43,11 +43,11 @@
 </template>
 
 <script>
-import CashbackTableItemComponent from './CashbackTableItemComponent.vue';
+// import CashbackTableItemComponent from './CashbackTableItemComponent.vue';
 
 export default {
   name: 'CashbackTableComponent',
-  components: { CashbackTableItemComponent },
+  // components: { CashbackTableItemComponent },
   data() {
     return {
       objeto: {

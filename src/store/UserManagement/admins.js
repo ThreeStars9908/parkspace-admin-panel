@@ -21,7 +21,6 @@ export const AdminsModule = {
             data.forEach((element, index) => {
                 state.admins[index].status = (element.status == "1" ? true: false);
             });
-            console.log(state.admins);
         },
         Edit_Admin: (state, data) => {
             let index = state.admins.findIndex((c) => c.id == data.id);
@@ -77,7 +76,7 @@ export const AdminsModule = {
 
     actions: {
         Add_Admin: async (context, data) => {
-            await api.post('/api/auth/admin/create', data)
+            await api.post('/api/auth/admin/', data)
             .then(res => {
                 context.commit('Add_Admin', res.data);
             })

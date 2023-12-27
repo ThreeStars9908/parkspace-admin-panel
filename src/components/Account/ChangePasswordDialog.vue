@@ -3,14 +3,14 @@
     <div className="rounded-lg bg-white p-6">
         <div className="flex flex-row justify-between mb-6">
             <div className="font-semibold text-[16px]">
-                Save changes?
+                {{ $t('button.save_changes') }}?
             </div>
             <base-icon name="fa fa-xmark" @click="this.$emit('savePassword', false)"/>
         </div>
         <div className="flex flex-row justify-between gap-4">
-            <default-button title="Cancel" bgcolor="#F8F8F8" color="#008AB6" 
+            <default-button title="button.cancel" bgcolor="#F8F8F8" color="#008AB6" 
                 @click="this.$emit('savePassword', false)"/>
-            <default-button title="Save" color="#F8F8F8"
+            <default-button title="button.save" color="#F8F8F8"
                 @click="onSave"/>
         </div>
     </div>

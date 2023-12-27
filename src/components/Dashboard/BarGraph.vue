@@ -3,18 +3,18 @@
         <div className="h-full shadow-[4px_6px_30px_0px_#00000020] px-6 py-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 mb-4">
                 <div className="text-left font-semibold">
-                    Revenue
+                    {{ $t('revenue') }}
                 </div>
                 <div className="flex flex-row">
                     <div className="w-2 h-2 rounded-full
                     bg-[#1486CA] mx-2 m-auto" />
-                    Appointments
+                    {{ $t('appointments') }}
                     <div className="w-2 h-2 rounded-full
                     bg-[#79CCFF] mx-2 m-auto" />
-                    Profit
+                    {{ $t('profit') }}
                 </div>
                 <div className="text-sm text-right text-[#3F3F44]">
-                    Last 12 months
+                    {{ $t('last_12_months') }}
                 </div>
             </div>
             <div className="mb-2">
@@ -69,13 +69,13 @@ export default {
                 ],
                 datasets: [
                     {
-                        label: 'Washes',
+                        label: this.$t('appointments'),
                         backgroundColor: '#1486CA',
-                        data: [3, 7, 4, 3, 7, 4, 3, 7, 4, 3, 7, 4],
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     }, {
-                        label: 'Profit',
+                        label: this.$t('profit'),
                         backgroundColor: '#79CCFF',
-                        data: [4, 3, 5, 4, 3, 5, 4, 3, 5, 4, 3, 5],
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     },
                 ],
             },

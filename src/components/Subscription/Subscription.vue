@@ -5,7 +5,7 @@
         <bar-graph />
       </div>
       <div className="h-full">
-        <card-box text="Active subscriptions"
+        <card-box text="active_subscriptions"
           icon="fa fa-check-circle"
           color="#0F83C9" value="0"
           class="h-full" />

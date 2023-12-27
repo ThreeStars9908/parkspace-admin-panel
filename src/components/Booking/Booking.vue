@@ -22,7 +22,7 @@
   import OrdersBlockGraphComponent from './OrdersBlockGraphComponent.vue';
   import OrdersTableComponent from './OrdersTableComponent.vue';
   import FinanceSpecificPageComponent from './FinanceSpecificPageComponent.vue';
-  
+
   export default {
     name: 'GeralOrdersSubpageComponent',
     components: {
@@ -30,6 +30,7 @@
       OrdersBlockGraphComponent,
       OrdersTableComponent,
       FinanceSpecificPageComponent,
+
     },
     data() {
       return {

@@ -23,7 +23,7 @@
       <table class="table-auto w-full text-sm
         text-[16px] text-[#3F3F44]
         text-left">
-        <thead className="font-normal
+        <thead className="font-normal text-center
           border-b-[1px] border-[#C9C9C9]">
           <tr>
             <th className="px-6 py-3">Booking ID</th>

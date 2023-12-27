@@ -26,7 +26,8 @@
                       checkedBg="#1C8E33" />
         </div>
         <div className="text-[#008AB6] font-medium text-[16px]
-        cursor-pointer text-right mr-4 my-auto">
+        cursor-pointer text-right mr-4 my-auto"
+          @click="onEdit">
           <base-icon name="fa fa-pen" color="#008AB6"/>
           <span class="ml-2">Edit</span>
         </div>
@@ -115,11 +116,14 @@
     </div>
   </div>
 </template>
-
+<!-- eslint-disable -->
 <script>
 import { mapState, mapActions } from 'vuex';
 import { VueToggles } from 'vue-toggles';
 import BaseIcon from '@/items/BaseIcon.vue';
+
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
   name: 'UserDataComponent',
@@ -140,7 +144,7 @@ export default {
     BaseIcon
   },
   methods: {
-    ...mapActions('Hosts', ['Change_HostPassword', 'Enable_Host']),
+    ...mapActions('Hosts', ['Change_HostPassword', 'Enable_Host', 'Edit_HostData']),
     changePass() {
       this.isHiddenOne = !this.isHiddenOne;
     },
@@ -155,6 +159,28 @@ export default {
       });
       this.changepassword = false;
     },
+    onEdit() {
+      if(this.selected_host.email === '') {
+        toast.error('Email is empty');
+      } else if(this.validateEmail(this.selected_host.email)) {
+        toast.error('Invalid email');
+      } else if(this.selected_host.cellphone === '') {
+        toast.error('Phone number is empty');
+      } else if(this.selected_host.role === '') {
+        toast.error('User type is empty');
+      } else {
+        this.Edit_HostData(this.selected_host);
+        toast.success('Host data edited successfully');
+      }
+    },
+    
+    validateEmail(email) {
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                return false;
+            } else {
+                return true;
+            }
+        },
   },
 };
 </script>

@@ -5,18 +5,18 @@
       scrollbar scrollbar-thumb-[#008AB6]
       scrollbar-track-[#D9D9D9] scrollbar-thumb-rounded">
       <div className="font-semibold text-left mb-4">
-        Last appointments
+        {{ $t('last') }} {{ $t('appointments') }}
       </div>
       <table class="w-full text-sm text-center">
         <thead className="text-md text-left
           border-b-[1px] border-[#C9C9C9]">
           <tr>
-            <th className="px-6 py-3">Client</th>
-            <th className="px-6 py-3">Host</th>
-            <th className="px-6 py-3 text-center">Rented Time</th>
-            <th className="px-6 py-3 text-center">Parking Slot</th>
-            <th className="px-6 py-3 text-center">Amount Payed</th>
-            <th className="px-6 py-3 text-center">Date / Hour <br> (booking finished)</th>
+            <th className="px-6 py-3">{{ $t('client') }}</th>
+            <th className="px-6 py-3">{{ $t('host') }}</th>
+            <th className="px-6 py-3 text-center">{{ $t('rented_time') }}</th>
+            <th className="px-6 py-3 text-center max-w-[160px]">{{ $t('parking_slot') }}</th>
+            <th className="px-6 py-3 text-center max-w-[160px]">{{ $t('amount_paid') }}</th>
+            <th className="px-6 py-3 text-center max-w-[320px]">{{ $t('date') }} / {{ $t('hour') }} ({{ $t('booking_finished') }})</th>
           </tr>
         </thead>
         <tbody className="font-light">

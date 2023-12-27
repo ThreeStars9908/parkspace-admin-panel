@@ -12,7 +12,7 @@
             </div>
         </div>
         <div className="text-xl text-left">
-            {{ this.text }}
+            {{ $t(`${this.text}`) }}
         </div>
     </div>
   </div>

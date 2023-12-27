@@ -68,8 +68,8 @@ const routes = [
         component: Documentation,
     },
     {
-        path: '/configuration/',
-        name: 'configuration',
+        path: '/setting/',
+        name: 'setting',
         component: Configuration,
     },
     {

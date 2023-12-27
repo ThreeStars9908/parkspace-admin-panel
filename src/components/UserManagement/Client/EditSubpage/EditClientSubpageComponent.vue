@@ -1,14 +1,16 @@
 <template>
   <div>
     <div v-if="isGeral" className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-      <user-data-component
-        @enableClicked="enableClicked"
-        @showC="(val) => this.$emit('showClient', val)" />
-      <vehicles-component />
-    </div>
-    <div v-if="isGeral" className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-      <payment-methods-component />
-      <addresses-component />
+      <div class="col1">
+        <user-data-component
+          @enableClicked="enableClicked"
+          @showC="(val) => this.$emit('showClient', val)" />
+        <payment-methods-component />
+      </div>
+      <div class="col2">
+        <vehicles-component />
+        <addresses-component />
+      </div>
     </div>
     <div v-if="isGeral">
       <book-history-table-component @changeToDescript="changeToDescript"/>
@@ -23,7 +25,6 @@
 </template>
 
 <script>
-
 import UserDataComponent from './UserDataComponent.vue';
 import PaymentMethodsComponent from './PaymentMethodsComponent.vue';
 import VehiclesComponent from './VehiclesComponent.vue';

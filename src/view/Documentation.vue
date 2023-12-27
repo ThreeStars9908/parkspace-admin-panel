@@ -1,6 +1,6 @@
 <template>
     <div class="documentation">
-        <page-header title="Legal Documentation" />
+        <page-header title="documentation" />
 
         <div class="submenu" className="mt-4">
             <div className="mr-auto">
@@ -9,39 +9,41 @@
                         <div :className="['mr-4 cursor-pointer '
                             + (this.isPage == 'FAQ' ? 'font-semibold' : '')]"
                             @click="changePage('FAQ')">
-                            FAQ
+                            {{ $t('faq') }}
                         </div>
                         <div :className="['mr-4 cursor-pointer '
                             + (this.isPage == 'CancellationTerms' ? 'font-semibold' : '')]"
                             @click="changePage('CancellationTerms')">
-                            Cancellation Terms
+                            {{ $t('cancellation_terms') }}
                         </div>
                         <div :className="['mr-4 cursor-pointer '
                             + (this.isPage == 'TermsofUse' ? 'font-semibold' : '')]"
                             @click="changePage('TermsofUse')">
-                            Terms of Use
+                            {{ $t('terms_of_use') }}
                         </div>
                     </div>
-                    <icon-button v-if="this.isPage === 'FAQ'" title="Add Question" icon="fa fa-circle-plus" color="#F9F9F9" :mobile="isMobile"
-                        @click="Add_FAQData({question: '', answer: '',})" />
+                    <icon-button v-if="this.isPage === 'FAQ'" title="add_question" icon="fa fa-circle-plus" color="#F9F9F9" :mobile="isMobile"
+                        @click="AddFAQ" />
                 </div>
                 <div className="flex flex-row justify-between mt-8">
                     <div class="title"
                         className="text-left font-semibold">
-                        <span v-if="this.isPage === 'FAQ'">FAQ</span>
-                        <span v-if="this.isPage === 'CancellationTerms'">Cancellation Terms</span>
-                        <span v-if="this.isPage === 'TermsofUse'">Terms of Use</span>
+                        <span v-if="this.isPage === 'FAQ'">{{ $t('faq') }}</span>
+                        <span v-if="this.isPage === 'CancellationTerms'">{{ $t('cancellation_terms') }}</span>
+                        <span v-if="this.isPage === 'TermsofUse'">{{ $t('terms_of_use') }}</span>
                     </div>
                     <div class="sub-btn">
                         <div v-if="this.isPage === 'FAQ'">
-                            <text-button title="Delete all" icon="fa fa-trash-can" :mobile="isMobile"
+                            <text-button title="delete_all" icon="fa fa-trash-can" :mobile="isMobile"
                                 @click="DeleteAll" />
                         </div>
                         <div v-if="this.isPage === 'CancellationTerms'">
-                            <text-button title="Edit" icon="fa fa-pen" :mobile="isMobile" />
+                            <text-button title="edit" icon="fa fa-pen" :mobile="isMobile"
+                                @click="this.isCancellationEdit = true" />
                         </div>
                         <div v-if="this.isPage === 'TermsofUse'">
-                            <text-button title="Edit" icon="fa fa-pen" :mobile="isMobile" />
+                            <text-button title="edit" icon="fa fa-pen" :mobile="isMobile"
+                                @click="this.isTermsofUseEdit = true" />
                         </div>
                     </div>
                 </div>
@@ -50,8 +52,10 @@
         </div>
         <div class="block mt-4">
             <f-a-q v-if="this.isPage === 'FAQ'"/>
-            <cancellation-terms v-if="this.isPage === 'CancellationTerms'"/>
-            <termsof-use v-if="this.isPage === 'TermsofUse'"/>
+            <cancellation-terms v-if="this.isPage === 'CancellationTerms'"
+                :isEdit="isCancellationEdit" @ChangeCancellation="ChangeCancellation" />
+            <termsof-use v-if="this.isPage === 'TermsofUse'"
+                :isEdit="isTermsofUseEdit" @ChangeTermsofUse="ChangeTermsofUse" />
         </div>
     </div>
 </template>
@@ -62,7 +66,7 @@ import FAQ from '../components/Documentation/FAQ.vue';
 import CancellationTerms from '../components/Documentation/CancellationTerms.vue';
 import TermsofUse from '../components/Documentation/TermsofUse.vue';
 
-import PageHeader from '../items/PageHeader.vue';
+import PageHeader from '../../src/assets/components/headers/PageHeader.vue'
 import IconButton from '../items/IconButton.vue';
 import TextButton from '../items/TextButton.vue';
 
@@ -83,6 +87,8 @@ export default {
         return {
             isPage: 'FAQ',
             isMobile: false,
+            isCancellationEdit: false,
+            isTermsofUseEdit: false,
         };
     },
     computed: {
@@ -107,12 +113,25 @@ export default {
                 this.isMobile = false;
             }
         },
+        AddFAQ() {
+            this.Add_FAQData({question: '', answer: '',});
+            if(this.errors)
+                toast.error(this.errors);
+            if(this.success)
+                toast.success('New FAQ added!');
+        },
         async DeleteAll() {
             await this.Delete_All_FAQData();
             if(this.errors)
                 toast.error(this.errors);
             if(this.success)
                 toast.success(this.success);
+        },
+        ChangeCancellation(val) {
+            this.isCancellationEdit = val;
+        },
+        ChangeTermsofUse(val) {
+            this.isTermsofUseEdit = val;
         },
     },
     created() {

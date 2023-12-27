@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 mt-4">
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 mt-4">
       <div class="graph col-span-2">
         <div className="p-[24px] rounded-[8px] h-full
         shadow-[4px_6px_30px_0px_#00000020]">
@@ -40,18 +40,10 @@
           </div>
         </div>
       </div>
-      <div class="date-picker">
-        <div className="
-        py-[24px] rounded-[8px]
-        shadow-[4px_6px_30px_0px_#00000020]">
-          <div className="text-[16px] font-semibold text-left ml-[40px]">Date Filter</div>
-          <div className="p-10">
-            <v-date-picker v-model="date"
-                           locale="pt-Br"
-                           style="width: 100%; border: none;" />
-          </div>
-        </div>
-      </div>
+      <datepicker v-model="date"
+        language="pt" inline="true"
+        @input="dateSelected"
+        class="text-left mx-auto"></datepicker>
     </div>
   </div>
 </template>
@@ -67,6 +59,8 @@ import {
   LinearScale,
 } from 'chart.js';
 import { Bar } from 'vue-chartjs';
+import Datepicker from 'vuejs3-datepicker'
+import { mapActions } from 'vuex';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -74,6 +68,7 @@ export default {
   name: 'OrdersBlockGraphComponent',
   components: {
     Bar,
+    Datepicker,
   },
   data() {
     return {
@@ -92,15 +87,15 @@ export default {
           {
             label: 'Done',
             backgroundColor: '#1486CA',
-            data: [60, 30, 50, 80, 10, 50, 60],
+            data: [0, 0, 0, 0, 0, 0, 0],
           }, {
             label: 'Rescheduled',
             backgroundColor: '#79CCFF',
-            data: [30, 15, 25, 40, 3, 35, 40],
+            data: [0, 0, 0, 0, 0, 0, 0],
           }, {
             label: 'Cancelled',
             backgroundColor: '#E5E5E5',
-            data: [4, 3, 5, 4, 3, 5, 4, 3],
+            data: [0, 0, 0, 0, 0, 0, 0, 0],
           },
         ],
       },
@@ -116,5 +111,17 @@ export default {
       },
     };
   },
+  methods: {
+    ...mapActions('Booking', ['Filter_Booking']),
+    dateSelected() {
+      const start_date = new Date(this.date.setHours(0, 0, 0, 0));
+      const end_date = new Date(this.date.setHours(23, 59, 59, 999));
+      console.log(start_date, end_date);
+      this.Filter_Booking({
+        start_date: start_date,
+        end_date: end_date,
+      });
+    },
+  }
 };
 </script>

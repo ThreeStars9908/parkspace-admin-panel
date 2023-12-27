@@ -18,14 +18,24 @@
         <div class="text-left">Telephone</div>
         <input-form type="text"
             placeholder="Telephone"
-            v-model:value="new_client.phone"
+            v-model:value="new_client.cellphone"
         />
         <div class="text-left">Address</div>
-        <input-form type="text"
-            placeholder="Address"
-            v-model:value="new_client.address"
-        />
-        <div className="text-left">Password</div>
+        <input type="text"
+            v-model="new_client.address"
+            @keyup="Input_Address(new_client.address)"
+            className="w-full rounded-lg p-2
+                border-solid border-2 border-[#7A7A7A]">
+        <div v-if="geo_address_list.length"
+            class="absolute z-50 bg-white border-solid border-2 w-[90%]">
+            <div v-for="(item, index) in geo_address_list"
+                :key="index"
+                className="text-sm border-b-2 mb-2 p-2"
+                @click="Select_Address(item)">
+                {{ item.formatted }}
+            </div>
+        </div>
+        <div className="text-left mt-4">Password</div>
         <input-form
             type="password"
             placeholder="Password"
@@ -44,15 +54,16 @@
     </div>
   </div>
 </template>
-
+<!-- eslint-disable -->
 <script>
-import { mapActions } from 'vuex';
-import BaseIcon from '../../../../items/BaseIcon.vue';
-import InputForm from '../../../../items/InputForm.vue';
-import DefaultButton from '../../../../items/DefaultButton.vue';
 
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+
+import { mapState, mapActions } from 'vuex';
+import BaseIcon from '../../../../items/BaseIcon.vue';
+import InputForm from '../../../../items/InputForm.vue';
+import DefaultButton from '../../../../items/DefaultButton.vue';
 
 export default {
     name: 'CreateClient',
@@ -62,9 +73,14 @@ export default {
             new_client: {
                 name: '',
                 email: '',
-                phone: '',
+                cellphone: '',
                 address: '',
                 password: '',
+                type: 'Home',
+                position: {
+                    latitude: 0,
+                    longitude: 0,
+                },
             },
         }
     },
@@ -73,10 +89,15 @@ export default {
         InputForm,
         DefaultButton
     },
+    computed: {
+        ...mapState('Clients', ['geo_address_list']),
+    },
     methods: {
-        ...mapActions('Clients', ['Add_Client']),
+        ...mapActions('Clients', ['Add_Client', 'Get_GeoAddress', 'Format_GeoAddress']),
         Register() {
-            if(!this.new_client.password || !this.confirmPass) {
+            if(!this.new_client.name || !this.new_client.email || !this.new_client.cellphone || !this.new_client.address) {
+                toast.error('Please input all fields!');
+            } else if(!this.new_client.password || !this.confirmPass) {
                 toast.error('Please input password!');
             } else if(this.new_client.password == this.confirmPass) {
                 this.Add_Client(this.new_client);
@@ -85,7 +106,32 @@ export default {
             } else {
                 toast.error('Password does not matched!');
             }
-        }
+        },
+        Input_Address(val) {
+            if(val.length >= 3)
+                this.Get_GeoAddress(val);
+            else
+                this.Format_GeoAddress();
+        },
+        Select_Address(val) {
+            this.new_client.address = val.formatted;
+            this.new_client.position = {
+                latitude: val.lat,
+                longitude: val.lon,
+            };
+            this.Format_GeoAddress();
+        },
+        
+        validateEmail(email) {
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                return false;
+            } else {
+                return true;
+            }
+        },
+    },
+    created() {
+        this.Format_GeoAddress();
     },
 }
 </script>

@@ -4,7 +4,7 @@
         px-6 py-8 rounded-lg">
     <div className="flex flex-row justify-between text-[#3F3F44] mb-8">
         <div className="text-[18px] font-semibold mr-auto">
-            {{ this.title }}
+            {{ $t(`${this.title}`) }}
         </div>
         <div className="text-[32px] font-semibold ml-auto -mt-3">
             {{ this.total }}

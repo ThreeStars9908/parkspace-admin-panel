@@ -1,6 +1,6 @@
 <template>
     <div class="booking_management">
-        <page-header title="Booking management and Finance"/>
+        <page-header title="booking"/>
         <div class="submenu"
             className="mt-[21px]">
             <div className="grid grid-cols-2">
@@ -37,7 +37,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import PageHeader from '../items/PageHeader.vue'
+import PageHeader from '../../src/assets/components/headers/PageHeader.vue'
 import FinanceSubpageComponent from '../components/Finance/Finance.vue'
 import GeralOrdersSubpageComponent from '../components/Booking/Booking.vue'
 

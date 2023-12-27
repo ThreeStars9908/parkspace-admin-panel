@@ -1,28 +1,28 @@
 <template>
     <div class="dashboard">
-        <page-header title="Dashboard" />
+        <page-header title="dashboard" />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-8">
             <div className="col-span-2">
                 <div className="h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-                    <card-box text="Total Revenue"
+                    <card-box text="dashboard.total_revenue"
                         icon="fa-solid fa-dollar"
                         color="#0F83C9"
                         value="$ 0.00" />
-                    <card-box text="Total Profit"
+                    <card-box text="dashboard.total_profit"
                         icon="fa fa-dollar"
                         color="#0F83C9"
                         value="$ 0.00" />
-                    <card-box text="Users"
+                    <card-box text="dashboard.users"
                         icon="fa fa-user"
                         color="#0F83C9"
                         value="0" />
-                    <card-box text="Active parking slots"
+                    <card-box text="dashboard.active_parking_slots"
                         icon="fa fa-location-dot"
                         color="#0F83C9"
                         value="0" />
                 </div>
             </div>
-            <card-last-box title="Revenue"
+            <card-last-box title="dashboard.revenue"
                 today="$ 0.00"
                 this_week="$ 0.00"
                 this_month="$ 0.00"
@@ -34,7 +34,7 @@
             </div>
             <div className="h-full grid grid-cols-1 md:grid-cols-2 gap-4">
                 <pizza-graph />
-                <review-box title="Total rating"
+                <review-box title="dashboard.total_rating"
                 total="0" first="0" second="0" third="0" fourth="0" fifth="0" average="0"
                 />
             </div>
@@ -49,7 +49,7 @@
 import { mapActions } from 'vuex';
 import CardLastBox from '@/items/CardLastBox.vue'
 import CardBox from '../items/CardBox.vue'
-import PageHeader from '../items/PageHeader.vue'
+import PageHeader from '../../src/assets/components/headers/PageHeader.vue'
 import PizzaGraph from '../components/Dashboard/PizzaGraph.vue'
 import BarGraph from '../components/Dashboard/BarGraph.vue'
 import ReviewBox from '../items/ReviewBox.vue'

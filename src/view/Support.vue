@@ -2,7 +2,7 @@
 <template>
     <div className="support">
         
-        <page-header title="Support" />
+        <page-header title="support" />
       <div class="table-component" v-if="isGeral"
         className="h-[720px] mt-8
             shadow-[4px_6px_30px_0px_#00000020] rounded-lg
@@ -56,7 +56,7 @@
 </template>
 <!-- eslint-disable -->
 <script>
-import PageHeader from '../items/PageHeader.vue'
+import PageHeader from '../../src/assets/components/headers/PageHeader.vue'
 import { mapState, mapActions } from 'vuex';
 import ChatComponent from '../components/Support/ChatComponents.vue';
 import { VueToggles } from 'vue-toggles';

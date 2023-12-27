@@ -1,6 +1,6 @@
 <template>
     <div class="requisition">
-        <page-header title="Requisitions" />
+        <page-header title="requisition" />
         <div class="table-component">
             <hosts-table-component @showHost="(val) => this.view_detail = val" />
             <parking-spots-component />
@@ -14,7 +14,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import PageHeader from '../items/PageHeader.vue'
+import PageHeader from '../../src/assets/components/headers/PageHeader.vue'
 import HostsTableComponent from '../components/Requisition/HostsTableComponent.vue'
 import ParkingSpotsComponent from '../components/Requisition/ParkingSpotsTableComponent.vue'
 

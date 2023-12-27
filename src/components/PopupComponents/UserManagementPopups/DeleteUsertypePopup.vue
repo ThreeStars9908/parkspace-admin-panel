@@ -10,7 +10,7 @@
         </div>
         <div className="cursor-pointer"
              @click="this.$emit('deleteUsertype', false)">
-          <v-icon name="io-close" />
+          <base-icon name="fa fa-close" />
         </div>
       </div>
       <div className="flex flex-row justify-between">
@@ -32,12 +32,16 @@
 </template>
 
 <script>
+import BaseIcon from '@/items/BaseIcon.vue';
 import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'DeleteUsertypePopup',
   data() {
     return {};
+  },
+  components: {
+    BaseIcon,
   },
   computed: {
     ...mapState('Admins', ['selected_usertype']),

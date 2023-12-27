@@ -33,7 +33,8 @@
           <base-icon name="fa fa-trash-can" color="#008AB6" />
             <span class="ml-2">Delete</span>
         </div>
-        <div className="text-[#008AB6] cursor-pointer text-right my-auto">
+        <div className="text-[#008AB6] cursor-pointer text-right my-auto"
+          @click="this.isedit = true">
           <base-icon name="fa fa-pen" color="#008AB6" />
             <span class="ml-2">Edit</span>
         </div>
@@ -41,31 +42,35 @@
       <div className="text-left text-[#3F3F44] mb-4">
         Brand
         <input v-model="item.brand"
+          :disabled="!isedit"
           className="h-[16px] w-full rounded-lg px-4 py-6
           bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
       </div>
       <div className="text-left text-[#3F3F44] mb-4">
         Model
         <input v-model="item.type"
+          :disabled="!isedit"
           className="h-[16px] w-full rounded-lg px-4 py-6
           bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
       </div>
       <div className="text-left text-[#3F3F44] mb-4">
         Color
         <input v-model="item.color"
+          :disabled="!isedit"
           className="h-[16px] w-full rounded-lg px-4 py-6
           bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
       </div>
       <div className="text-left text-[#3F3F44] mb-4">
         Registration number
         <input v-model="item.number"
+          :disabled="!isedit"
           className="h-[16px] w-full rounded-lg px-4 py-6
           bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
       </div>
       <div className="flex flex-row">
         <div className="ml-auto font-semibold rounded-lg px-4 py-2 min-w-[120px]
           bg-[#008AB6] text-white cursor-pointer hover: shadow-lg"
-          @click="OnEdit(item)">
+          @click="OnEdit(item), this.isedit = true">
           Save
         </div>
       </div>
@@ -85,6 +90,7 @@ export default {
   name: 'VehiclesComponent',
   data() {
     return {
+      isedit: false,
     };
   },
   components: {

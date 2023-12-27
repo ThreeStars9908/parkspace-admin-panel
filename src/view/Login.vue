@@ -12,28 +12,28 @@
                     src="../../public/assets/img/brand-login.png"
                     alt="" />
                 <div className="text-[#008BB6] mb-8 text-[24px] font-semibold">
-                    Sign In
+                    {{ $t('login.signin') }}
                 </div>
                 <div className="m-auto">
                     <input-form
                         type="text"
-                        placeholder="E-mail or Phone number"
+                        placeholder="login.email"
                         v-model:value="email"
                     />
                     <input-form
                         type="password"
-                        placeholder="Password"
+                        placeholder="login.password"
                         v-model:value="password"
                     />
                     <div className="text-[#008BB6] underline mb-8 cursor-pointer"
                         @click="page = 'Reset'">
-                        I forgot the password
+                        {{ $t('login.forgot_password') }}
                     </div>
                     <button className="rounded-lg p-2 mb-4
                         w-full text-white bg-[#0096C2]
                         cursor-pointer hover:shadow-lg"
                         @click="login">
-                        Log In
+                        {{ $t('login.login') }}
                     </button>
                 </div>
             </div>
@@ -43,24 +43,26 @@
                 <img className="m-auto h-full mb-6"
                     src="../../public/assets/img/brand-login.png"
                     alt="" />
-                <div className="text-[#008BB6] mb-8 text-[24px] font-semibold">
-                    Retrieve your account
-                </div>
-                <div className="m-auto w-[80%]">
-                    <input-form
-                        type="text"
-                        placeholder="E-mail or Phone number"
-                        v-model:value="email"
-                    />
-                    <div className="text-[#7A7A7A] m-auto w-[80%] mb-6">
-                        We're gonna sent an e-mail to your inbox with a link to reset your password
+                <div className="w-[60%] mx-auto">
+                    <div className="text-[#008BB6] mb-8 text-[24px] font-semibold">
+                        {{ $t('login.retrieve') }}
                     </div>
-                    <button className="rounded-lg p-2 mb-4
-                        w-full text-white bg-[#0096C2]
-                        cursor-pointer hover:shadow-lg"
-                        @click="page = 'Password'">
-                        Send me the e-mail
-                    </button>
+                    <div className="m-auto">
+                        <input-form
+                            type="text"
+                            placeholder="login.email"
+                            v-model:value="email"
+                        />
+                        <div className="text-[#7A7A7A] m-auto w-[80%] mb-6">
+                            {{ $t('login.sent') }}
+                        </div>
+                        <button className="rounded-lg p-2 mb-4
+                            w-full text-white bg-[#0096C2]
+                            cursor-pointer hover:shadow-lg"
+                            @click="page = 'Password'">
+                            {{ $t('login.send') }}
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -70,29 +72,29 @@
                     src="../../public/assets/img/brand-login.png"
                     alt="" />
                 <div className="text-[#008BB6] mb-8 text-[24px] font-semibold">
-                    Change your password
+                    {{ $t('login.change_password') }}
                 </div>
                 <div className="m-auto">
                     <input-form
                         type="password"
-                        placeholder="Password"
+                        placeholder="login.password"
                         v-model:value="password"
                     />
                     <input-form
                         type="password"
-                        placeholder="Confirm Password"
+                        placeholder="login.confirm_password"
                         v-model:value="confirmPass"
                     />
                     <button className="rounded-lg p-2 mb-4
                         w-full text-white bg-[#0096C2]
                         cursor-pointer hover:shadow-lg"
                         @click="page = 'Login'">
-                        Confirm new password
+                        {{ $t('login.confirm_password') }}
                     </button>
-                    <div className="m-auto text-[#7A7A7A] mb-2">or</div>
+                    <div className="m-auto text-[#7A7A7A] mb-2">{{ $t('login.or') }}</div>
                     <div className="m-auto font-semibold text-[#0096C2]
                         cursor-pointer" @click="page = 'Login'">
-                        Log In to my account
+                        {{ $t('login.loginto') }}
                     </div>
                 </div>
             </div>

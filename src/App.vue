@@ -46,68 +46,6 @@ export default {
   name: 'App',
   data() {
     return {
-      menu: [
-        {
-          href: '/dashboard/',
-          title: 'Dashboard',
-          icon: 'fa fa-house',
-        },
-        {
-          href: '/user/',
-          title: 'User Management',
-          icon: 'fa fa-users',
-        },
-        {
-          href: '/report/',
-          title: 'Reports',
-          icon: 'fab fa-trello',
-        },
-        {
-          href: '/booking/',
-          title: 'Booking management and Finance',
-          icon: 'fa fa-dollar-sign',
-        },
-        {
-          href: '/support/',
-          title: 'Support',
-          icon: 'fa fa-circle-exclamation',
-        },
-        {
-          href: '/requisition/',
-          title: 'Requisitions',
-          icon: 'fa fa-clock',
-        },
-        {
-          href: '/review/',
-          title: 'Reviews',
-          icon: 'fa fa-star',
-        },
-        {
-          href: '/subscription/',
-          title: 'Subscriptions and Cashback',
-          icon: 'fa fa-shopping-bag',
-        },
-        {
-          href: '/documentation/',
-          title: 'Legal documentation',
-          icon: 'fa fa-file',
-        },
-        {
-          href: '/configuration/',
-          title: 'Configurations',
-          icon: 'fa fa-cog',
-        },
-        {
-          href: '/account/',
-          title: 'My account',
-          icon: 'fa fa-user',
-        },
-        {
-          href: '/login/',
-          title: 'Logout',
-          icon: 'fa fa-right-from-bracket',
-        }
-      ],
       isClosed: false,
     }
   },
@@ -122,6 +60,70 @@ export default {
     currentRouteName() {
       return this.$route.name;
     },
+    menu() {
+      return [
+        {
+          href: '/dashboard/',
+          title: this.$t('title.dashboard'),
+          icon: 'fa fa-house',
+        },
+        {
+          href: '/user/',
+          title: this.$t('title.user'),
+          icon: 'fa fa-users',
+        },
+        {
+          href: '/report/',
+          title: this.$t('title.report'),
+          icon: 'fab fa-trello',
+        },
+        {
+          href: '/booking/',
+          title: this.$t('title.booking'),
+          icon: 'fa fa-dollar-sign',
+        },
+        {
+          href: '/support/',
+          title: this.$t('title.support'),
+          icon: 'fa fa-circle-exclamation',
+        },
+        {
+          href: '/requisition/',
+          title: this.$t('title.requisition'),
+          icon: 'fa fa-clock',
+        },
+        {
+          href: '/review/',
+          title: this.$t('title.review'),
+          icon: 'fa fa-star',
+        },
+        {
+          href: '/subscription/',
+          title: this.$t('title.subscription'),
+          icon: 'fa fa-shopping-bag',
+        },
+        {
+          href: '/documentation/',
+          title: this.$t('title.documentation'),
+          icon: 'fa fa-file',
+        },
+        {
+          href: '/setting/',
+          title: this.$t('title.setting'),
+          icon: 'fa fa-cog',
+        },
+        {
+          href: '/account/',
+          title: this.$t('title.account'),
+          icon: 'fa fa-user',
+        },
+        {
+          href: '/login/',
+          title: this.$t('title.logout'),
+          icon: 'fa fa-right-from-bracket',
+        }
+      ]
+    }
   },
   mounted() {
     this.onResize();

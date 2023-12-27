@@ -1,5 +1,6 @@
 /* eslint-disable */
 import api from '@/utils/api';
+import axios from 'axios';
 
 export const ClientsModule = {
     namespaced: true,
@@ -10,7 +11,10 @@ export const ClientsModule = {
         selected_client: {},
         selected_client_car: {},
         selected_client_payment: {},
+        selected_client_address: [],
+        selected_client_address_list: [],
         client_address: {},
+        geo_address_list: [],
     },
 
     getters: {
@@ -19,11 +23,42 @@ export const ClientsModule = {
 
     mutations: {
         Add_Client: (state, data) => {
+            if(data.address) {
+                const address = data.address;
+                address.position = JSON.parse(address.position);
+                data.address = [];
+                data.address.push(address);
+                data.edit_address = {
+                    id: '',
+                    address: '',
+                    position: {
+                        latitude: '',
+                        longitude: '',
+                    }
+                };
+                data.edit_address.id = data.address[0].id;
+            }
             state.clients.unshift(data);
             state.total_client ++;
             state.new_client ++;
         },
         Update_Client: (state, data) => {
+            console.log(data);
+            if(data.address) {
+                const address = data.address;
+                address.position = JSON.parse(address.position);
+                data.address = [];
+                data.address.push(address);
+                data.edit_address = {
+                    id: '',
+                    address: '',
+                    position: {
+                        latitude: '',
+                        longitude: '',
+                    }
+                };
+                data.edit_address.id = data.address[0].id;
+            }
             let index = state.clients.findIndex((c) => c.id == data.id);
             state.clients[index] = data;
         },
@@ -33,6 +68,8 @@ export const ClientsModule = {
         },
         Select_Client: (state, data) => {
             data.status = (data.status == '1' ? true : false);
+            state.selected_client_address.splice(0, state.selected_client_address.length);
+            state.selected_client_address_list.splice(0, state.selected_client_address_list.length);
             state.selected_client = data;
         },
         Get_All_Clients: (state, data) => {
@@ -40,10 +77,26 @@ export const ClientsModule = {
             state.total_client = data.length;
             const current = new Date();
             state.new_client = 0;
-            data.forEach(element => {
+            data.forEach((element, index) => {
                 const created = new Date(element.created_at);
                 if(Math.floor((current - created) / (1000 * 24 * 60 * 60)) <= 7)
                     state.new_client ++;
+                if(data[index].address.length) {
+                    data[index].address.forEach((address, id) => {
+                        data[index].address[id].position = JSON.parse(data[index].address[id].position);
+                    });
+                }
+                data[index].edit_address = {
+                    id: '',
+                    address: '',
+                    position: {
+                        latitude: '',
+                        longitude: '',
+                    }
+                };
+                if(data[index].address.length) {
+                    data[index].edit_address.id = data[index].address[0].id;
+                }
             });
             state.clients = data;
         },
@@ -61,7 +114,18 @@ export const ClientsModule = {
         Get_Client_car: (state, data) => {
             state.selected_client_car = data;
         },
+        Get_Selected_ClientAddress: (state, data) => {
+            if(state.selected_client_address) {
+                state.selected_client.edit_address.address = data;
+            }
+            state.selected_client_address.push(data);
+        },
+        Get_Selected_ClientAddressList: (state, data) => {
+            console.log(data);
+            state.selected_client_address_list.unshift(data);
+        },
         Add_ClientPayment: (state, data) => {
+            console.log(data);
             state.selected_client_payment.unshift(data);
         },
         Update_ClientPayment: (state, data) => {
@@ -78,13 +142,40 @@ export const ClientsModule = {
         Get_Client_Addresss: (state, data) => {
             state.client_address = data;
         },
+        Get_GeoAddress: (state, data) => {
+            state.geo_address_list = data;
+        },
+        Format_GeoAddress: (state) => {
+            state.geo_address_list.splice(0, state.geo_address_list.length);
+        },
+        Add_Client_Address: (state, data) => {
+            const address = {
+                address: data,
+                address_name: '',
+            }
+            state.selected_client_address_list.unshift(address);
+        },
+        Save_Client_Address: (state, data) => {
+            // const address = {
+            //     address: data,
+            //     address_name: '',
+            // }
+            console.log(data);
+            // let index = state.selected_client_address_list.findIndex((c) => c.address.id == data.address.id);
+            // console.log(index);
+            // state.selected_client_address_list[index] = data;
+        },
+        Delete_Client_Address: (state, data) => {
+            let index = state.selected_client_address_list.findIndex((c) => c.address.id == data.id);
+            state.selected_client_address_list.splice(index, 1);
+        }
     },
 
     actions: {
         Add_Client: async (context, data) => {
             await api.post('/api/auth/admin/clients', data)
             .then(res => {
-                context.commit('Add_Client', res.data);
+                context.commit('Add_Client', res.data.user);
             })
             .catch(err => {
                 console.log(err.errors);
@@ -93,10 +184,10 @@ export const ClientsModule = {
         Edit_Client: async (context, data) => {
             await api.put(`/api/auth/admin/clients/${data.id}`, data)
             .then(res => {
-                context.commit('Update_Client', data);
+                context.commit('Update_Client', res.data.user);
             })
             .catch(err => {
-                console.log(err.errors);
+                console.log(err);
             });
         },
         Delete_Client: async (context, id) => {
@@ -110,6 +201,23 @@ export const ClientsModule = {
         },
         Select_Client: async (context, data) => {
             context.commit('Select_Client', data);
+            data.address.sort((a, b) => a.id - b.id);
+            if(data.address.length) {
+                data.address.forEach((address, id) => {
+                    axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${data.address[id].position.latitude}&lon=${data.address[id].position.longitude}&apiKey=b36bcb8fe8234991b2878174abd2592f`)
+                    .then(res => {
+                        context.commit('Get_Selected_ClientAddress', res.data.features[0].properties.formatted);
+                        const sdata = {
+                            address_name: res.data.features[0].properties.formatted,
+                            address: address,
+                        }
+                        context.commit('Get_Selected_ClientAddressList', sdata);
+                    })
+                    .catch(err => {
+                        console.log(err.errors);
+                    });
+                });
+            }
             await api.get(`/api/auth/admin/clients/${data.id}/car`)
             .then(res => {
                 context.commit('Get_Client_car', res.data);
@@ -131,8 +239,20 @@ export const ClientsModule = {
                 context.commit('Get_All_Clients', res.data);
             })
             .catch(err => {
+                console.log(err);
+            });
+        },
+        Get_GeoAddress: async (context, data) => {
+            await axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${data}&format=json&apiKey=b36bcb8fe8234991b2878174abd2592f`)
+            .then(res => {
+                context.commit('Get_GeoAddress', res.data.results);
+            })
+            .catch(err => {
                 console.log(err.errors);
             });
+        },
+        Format_GeoAddress: async (context) => {
+            context.commit('Format_GeoAddress');
         },
         Get_Client_Address: async (context) => {
             await api.get('/api/auth/address/myAddress')
@@ -217,5 +337,33 @@ export const ClientsModule = {
                 console.log(err.errors);
             });
         },
+        
+        Add_Client_Address: async (context, data) => {
+            await api.post(`/api/auth/admin/clients/${data.id}/address`, data)
+            .then(res => {
+                context.commit('Add_Client_Address', res.data);
+            })
+            .catch(err => {
+                console.log(err.errors);
+            });
+        },
+        Save_Client_Address: async (context, data) => {
+            await api.put(`/api/auth/admin/clients/address/${data.address.userId}/${data.address.id}`, data.address)
+            .then(res => {
+                context.commit('Save_Client_Address', data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        },
+        Delete_Client_Address: async (context ,data) => {
+            await api.delete(`/api/auth/admin/clients/address/${data.userId}/${data.id}`)
+            .then(res => {
+                context.commit('Delete_Client_Address', data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        }
     }
 }

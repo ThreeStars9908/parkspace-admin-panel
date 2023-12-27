@@ -11,7 +11,7 @@
         </div>
         <div className="cursor-pointer"
              @click="this.$emit('registerAdmin', false)">
-          <v-icon name="io-close" />
+          <base-icon name="fa fa-close" />
         </div>
       </div>
       <div className="text-left text-[16px] font-normal text-[#3F3F44]">
@@ -38,7 +38,7 @@
         Telephone
         <div className="ml-auto">
           <div className="h-fit rounded-lg">
-            <input v-model="new_admin.phone"
+            <input v-model="new_admin.cellphone"
                    className="h-[40px] w-full rounded-lg  px-4 py-6
                       bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
           </div>
@@ -48,15 +48,15 @@
         Type
         <div className="ml-auto">
           <div className="h-fit rounded-lg">
-            <input v-model="role" placeholder="Admin"
+            <!-- <input v-model="new_admin.role" placeholder="Admin"
                    className="h-[40px] w-full rounded-lg  px-4 py-6
-                      bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
-            <!-- <select v-model="role"
+                      bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]"> -->
+            <select v-model="new_admin.role"
               class="h-[48px] w-full rounded-lg px-4
               bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
               <option v-for="(element, i) in admin_type"
                 v-bind:key="i" :value="element">{{ element }}</option>
-            </select> -->
+            </select>
           </div>
         </div>
       </div>
@@ -70,11 +70,9 @@
                      :type="isHiddenOne ? 'password' : 'text'"
                      aria-label="Password"
                      className="w-full px-[10px] py-3">
-              <v-icon :name="isHiddenOne ? 'bi-eye' : 'bi-eye-slash'"
-                      scale="1.25"
-                      fill="black"
-                      class="cursor-pointer absolute -ml-10 mt-3"
-                      @click="changePass()" />
+              <base-icon :name="isHiddenOne ? 'fa fa-eye' : 'fa fa-eye-slash'"
+                class="cursor-pointer absolute -ml-10 mt-3"
+                @click="changePass()" />
             </div>
           </div>
         </div>
@@ -89,27 +87,26 @@
                      :type="isHiddenTwo ? 'password' : 'text'"
                      aria-label="Confirm Password"
                      className="w-full px-[10px] py-3">
-              <v-icon :name="isHiddenTwo ? 'bi-eye' : 'bi-eye-slash'"
-                      scale="1.25"
-                      fill="black"
-                      class="cursor-pointer absolute -ml-10 mt-3"
-                      @click="changeConfirmPass()" />
+              <base-icon :name="isHiddenTwo ? 'fa fa-eye' : 'fa fa-eye-slash'"
+                class="cursor-pointer absolute -ml-10 mt-3"
+                @click="changeConfirmPass()" />
             </div>
           </div>
         </div>
       </div>
-      <div className="w-[241px] p-[12.5px] bg-[#008AB6]
-            text-white rounded-lg cursor-pointer
-            mx-auto font-semibold text-center"
-           @click="RegisterAdmin">
-        Register Admin
-      </div>
+      <default-button title="Register Admin"
+        @click="RegisterAdmin" />
     </div>
   </div>
 </template>
-
+<!-- eslint-disable -->
 <script>
+import BaseIcon from '../../../items/BaseIcon.vue';
+import DefaultButton from '../../../items/DefaultButton.vue';
 import { mapActions } from 'vuex';
+
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
   name: 'CreateAdminPopup',
@@ -121,12 +118,16 @@ export default {
       new_admin: {
         name: '',
         email: '',
-        phone: '',
+        role: 'admin',
+        cellphone: '',
         password: '',
       },
-      role: 'Admin',
-      admin_type: ['Admin', 'Manager'],
+      admin_type: ['admin'],
     };
+  },
+  components: {
+    DefaultButton,
+    BaseIcon,
   },
   methods: {
     ...mapActions('Admins', ['Add_Admin']),
@@ -137,11 +138,24 @@ export default {
       this.isHiddenTwo = !this.isHiddenTwo;
     },
     RegisterAdmin() {
-      if (this.new_admin.password === this.confirmPass) {
+      if (this.new_admin.name === '' || this.new_admin.email === '' || this.new_admin.cellphone === '' || this.new_admin.password === '' || this.confirmPass === '') {
+        toast.error('Please fill in all fields');
+      } else if (this.validateEmail(this.new_admin.email)) {
+        toast.error('Invalid email');
+      } else if (this.new_admin.password !== this.confirmPass) {
+        toast.error('Passwords do not match');
+      } else if (this.new_admin.password === this.confirmPass) {
         this.Add_Admin(this.new_admin);
         this.$emit('registerAdmin', false);
       }
     },
+    validateEmail(email) {
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                return false;
+            } else {
+                return true;
+            }
+        },
   },
 };
 </script>

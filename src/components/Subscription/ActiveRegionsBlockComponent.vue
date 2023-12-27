@@ -23,15 +23,16 @@
                     className="w-full h-fit px-[10px] py-2 rounded-lg
                     bg-[#F8F8F8]">
                     <base-icon v-if="isShow != index + 1"
-                        name="fa fa-arrow-down" 
+                        name="fa fa-angle-down" 
                         color="#323232"
                         @click="Showinfo(index + 1)"
                         class="absolute -ml-6 mt-3 cursor-pointer"/>
-                    <base-icon v-else
-                        name="fa fa-arrow-up" 
-                        color="#323232"
-                        @click="Showinfo(index + 1)"
-                        class="absolute -ml-6 mt-3 cursor-pointer"/>
+                        <!-- class="absolute -ml-6 mt-3 cursor-pointer" -->
+                <base-icon v-else
+                    name="fa fa-angle-up" 
+                    color="#323232"
+                    @click="Showinfo(index + 1)"
+                    class="cursor-pointer float-right mr-3 mt-2"/>
                 <div v-if="isShow == index + 1"
                     className="w-full h-fit p-4">
                     <div className="font-semibold text-left mb-4">Country name</div>                    
@@ -39,7 +40,17 @@
                         <div className="w-[40%] flex flex-col justify-start text-left">
                             <span className="mb-2">Country active</span>
                             <input v-model="item.name" placeholder="Country name"
+                                @keyup="Get_GeoAddress(item.name)"
                                 className="bg-[#F8F8F8] rounded-lg p-2 w-full">
+                            <div v-if="geo_address_list.length"
+                                class="py-2 z-50 bg-white border-solid border-2">
+                                <div v-for="(el, id) in geo_address_list"
+                                    :key="id"
+                                    className="text-sm border-b-2 mb-2 p-2"
+                                    @click="Select_Address(el, index)">
+                                    {{ el.formatted }}
+                                </div>
+                            </div>
                         </div>
                         <div className="w-[60%] flex flex-col justify-between gap-2 mb-2 text-left">
                             <span>Price per time (Country)</span>
@@ -84,7 +95,7 @@
                     </div>
                     <div className="mt-4 rounded-lg m-auto py-3 w-[240px]
                         font-semibold bg-[#008AB6] text-white cursor-pointer"
-                        @click="Edit_Range(item)">
+                        @click="onEdit(item)">
                         Confirm changes
                     </div>
                 </div>
@@ -93,7 +104,7 @@
                 <base-icon name="fa fa-pen" color="#323232"
                     @click="Showinfo(index + 1)" class="mr-2"/>
                 <base-icon name="fa fa-trash-can" color="#323232"
-                    @click="Remove_Range(item.id)"/>
+                    @click="Remove(item)"/>
             </div>
         </div>
     </div>
@@ -102,6 +113,9 @@
 <script>
 import BaseIcon from '../../items/BaseIcon.vue';
 import { mapState, mapActions } from 'vuex';
+
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
     name: 'ActiveRegionsBlockComponent',
@@ -115,16 +129,28 @@ export default {
         BaseIcon
     },
     computed: {
-        ...mapState('Ranges', ['ranges']),
+        ...mapState('Ranges', ['ranges', 'geo_address_list']),
     },
     methods: {
-        ...mapActions('Ranges', ['Edit_Range', 'Remove_Range']),
+        ...mapActions('Ranges', ['Edit_Range', 'Remove_Range', 'Get_GeoAddress', 'Format_GeoAddress']),
         Showinfo(index) {
             if(!this.isShow)
                 this.isShow = index;
             else
                 this.isShow = null;
         },
+        Select_Address(val, index) {
+            this.ranges[index].name = val.formatted;
+            this.Format_GeoAddress();
+        },
+        onEdit(item) {
+            this.Edit_Range(item);
+            toast.success('Saved!');
+        },
+        Remove(item) {
+            this.Remove_Range(item.id);
+            toast.success('Deleted!');
+        }
     },
 }
 </script>

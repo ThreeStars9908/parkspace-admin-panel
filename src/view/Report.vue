@@ -1,6 +1,6 @@
 <template>
   <div class="report">
-    <page-header title="Reports" />
+    <page-header title="report" />
     <div class="mt-4">
       <revenue-filters />
     </div>
@@ -11,7 +11,7 @@
       <div class="col-span-2">
         <composition-graph />
       </div>
-      <card-last-box title="Revenue"
+      <card-last-box title="revenue"
                 today="$ 0.00"
                 this_week="$ 0.00"
                 this_month="$ 0.00"
@@ -29,7 +29,7 @@ import RevenueFilters from '../components/Report/Revenue filters.vue'
 import RevenueGraph from '../components/Report/RevenueGraph.vue'
 import ReportTable from '../components/Report/ReportTable.vue'
 import CardLastBox from '../items/CardLastBox.vue'
-import PageHeader from '../items/PageHeader.vue'
+import PageHeader from '../../src/assets/components/headers/PageHeader.vue'
 
 export default {
   name: 'ReportView',

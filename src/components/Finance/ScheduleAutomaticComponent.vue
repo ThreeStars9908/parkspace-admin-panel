@@ -22,9 +22,9 @@
           <div className="min-w-[120px] h-fit rounded-lg mb-2 flex flex-row justify-between
           bg-white border-2 border-solid border-[#EBF0ED]">
             <span className="px-[10px] py-2 text-[#3F3F44]">Weekly</span>
-            <div className="mt-3 mr-3">
+            <div className="my-auto mr-3">
               <input type="radio" name="frequency"
-              className="w-4 h-4">
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-solid border-gray-500">
             </div>
           </div>
         </div>
@@ -32,9 +32,9 @@
           <div className="min-w-[120px] h-fit rounded-lg mb-2 flex flex-row justify-between
           bg-white border-2 border-solid border-[#EBF0ED]">
             <span className="px-[10px] py-2 text-[#3F3F44]">Monthly</span>
-            <div className="mt-3 mr-3">
+            <div className="my-auto mr-3">
               <input type="radio" name="frequency"
-              className="w-4 h-4">
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-solid border-gray-500">
             </div>
           </div>
         </div>
@@ -42,9 +42,9 @@
           <div className="min-w-[120px] h-fit rounded-lg mb-2 flex flex-row justify-between
           bg-white border-2 border-solid border-[#EBF0ED]">
             <span className="px-[10px] py-2 text-[#3F3F44]">Bimonthly</span>
-            <div className="mt-3 mr-3">
+            <div className="my-auto mr-3">
               <input type="radio" name="frequency"
-              className="w-4 h-4">
+              className="w-4 h-4 text-blue-600 bg-gray-100 border-solid border-gray-500">
             </div>
           </div>
         </div>

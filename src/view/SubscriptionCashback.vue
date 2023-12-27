@@ -1,6 +1,6 @@
 <template>
     <div class="subscription_cashback">
-        <page-header title="Subscriptions and Cashback" />
+        <page-header title="subscription" />
         <div class="submenu"
         className="mt-4">
         <div className="grid grid-cols-2">
@@ -10,12 +10,12 @@
               <div :className="['mr-[57px] cursor-pointer '
                 + (this.isPage ? 'font-semibold' : '')]"
                 @click="changePage(true)">
-                Subscriptions
+                {{ $t('subscriptions') }}
               </div>
               <div :className="['cursor-pointer '
                 + (!this.isPage ? 'font-semibold' : '')]"
                 @click="changePage(false)">
-                Cashback
+                {{ $t('cashback') }}
               </div>
             </div>
           </div>
@@ -34,7 +34,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import PageHeader from '../items/PageHeader.vue'
+import PageHeader from '../../src/assets/components/headers/PageHeader.vue'
 import SubScription from '../components/Subscription/Subscription.vue'
 import CashBack from '../components/Cashback/Cashback.vue';
 

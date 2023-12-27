@@ -7,34 +7,20 @@
       scrollbar scrollbar-thumb-[#008AB6]
       scrollbar-track-[#D9D9D9] scrollbar-thumb-rounded">
       <div class="title"
-           className="grid grid-cols-1 lg:grid-cols-2 h-[56px] mb-6">
-        <div className="flex flex-row justify-start">
+           className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4">
           <div className="text-[16px] font-semibold text-left mb-[16px] mr-[20px] my-auto">
-            Registered hosts
+            Registered clients
           </div>
-          <div className="w-fit h-fit rounded-xl
-                border-solid border-2 border-[#C9C9C9]
-                pl-3">
-                <base-icon name="fa fa-search" class="relative ml-4 mr-2 my-auto"/>
-              <input type="text"
-                    v-model="search"
-                    placeholder="Search"
-                    aria-label="search"
-                    className="ml-3 px-3 py-3 rounded-r-3xl">
-            </div>
+          <search-form v-model:value="search"
+            placeholder="search" />
         </div>
         <div className="ml-auto">
-          <!-- <select v-model="filter" @change="FilterSort"
-              class="bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED] py-2 px-4 rounded-lg">
-              <option v-for="(item, index) in items" v-bind:key="index" :value="index">{{ item }}</option>
-            </select> -->
-          <div className="w-[241px] p-[12.5px] bg-[#008AB6]
-            text-white rounded-lg cursor-pointer
-            m-auto font-semibold"
-            @click="registerHosts">
-            <base-icon name="fa-solid fa-user-plus"
-                       color="#F8F8F8" class="mr-2"/>
-            Register host
+          <div className="text-right">
+            <icon-button title="Register host"
+              :mobile="isClosed"
+              icon="fa-solid fa-user-plus" color="#F9F9F9"
+              @click="this.$emit('registerHosts', true);"/>
           </div>
         </div>
       </div>
@@ -64,25 +50,38 @@
 </template>
 
 <script>
-import BaseIcon from '@/items/BaseIcon.vue';
+import SearchForm from '@/assets/components/forms/SearchForm.vue';
+import IconButton from '@/items/IconButton.vue';
 import { mapState } from 'vuex';
 import HostsGeralTableItemComponent from './HostsGeralTableItemComponent.vue';
 
 export default {
   name: 'HostsGeralTableComponent',
-  components: { HostsGeralTableItemComponent, BaseIcon },
+  components: {
+    HostsGeralTableItemComponent,
+    IconButton,
+    SearchForm,
+  },
   data() {
     return {
       items: ['Alphabetical', 'ID'],
       search: '',
       filter: '',
+      isClosed: false,
     };
   },
   computed: {
     ...mapState('Hosts', ['hosts']),
     onFilter() {
-      return this.hosts.filter(item => item.name.includes(this.search));
+      return this.hosts.filter(item => item.name.toLowerCase().includes(this.search.toLowerCase()));
     }
+  },
+  mounted() {
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onResize);
   },
   methods: {
     registerHosts() {
@@ -99,6 +98,13 @@ export default {
         this.hosts.sort((a, b) => b.name - a.name);
       } else {
         this.hosts.sort((a, b) => a.id - b.id);
+      }
+    },
+    onResize() {
+      if (window.innerWidth <= 768) {
+        this.isClosed = true;
+      } else {
+        this.isClosed = false;
       }
     },
   },

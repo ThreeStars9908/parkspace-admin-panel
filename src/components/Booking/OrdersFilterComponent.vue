@@ -9,80 +9,34 @@
           <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
           <div @click="isShow = !isShow"
                className="cursor-pointer">
-            <base-icon :name="!isShow ? 'fa fa-arrow-down' : 'fa fa-arrow-up'" />
+            <base-icon :name="!isShow ? 'fa fa-angle-down' : 'fa fa-angle-up'" />
           </div>
         </div>
         <div className="mt-6"
              v-show="isShow">
           <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 gap-16 justify-between">
             <div>
-              <div className="font-normal text-[16px] text-left">
+              <div className="font-normal text-[16px] text-left mb-2">
                 Period:
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 items-center">
-                <div className="mr-2 mb-2">
-                  <VueDatePicker v-model="start_date"
-                                :enable-time-picker="false" />
-                </div>
-                <div className="mr-2 mb-2">
-                  <VueDatePicker v-model="end_date"
-                                :enable-time-picker="false"
-                                style="height = 44px;" />
-                </div>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <datepicker v-model="start_date"
+                  class="text-left"></datepicker>
+                <datepicker v-model="end_date"
+                  class="text-left"></datepicker>
               </div>
             </div>
             <div>
-              <div className="font-normal text-[16px] text-left">
-                Search for:
-              </div>
-              <div className="h-[44px] mr-2 mb-2">
-                  <v-select label="Status"
-                            :items="[
-                              'Assigned',
-                              'Not Assigned',
-                              'To Confirm',
-                              'Confirmed',
-                              'Cancelled',
-                            ]"
-                            v-model="status"
-                            variant="outlined"
-                            density="compact" />
-              </div>
+              <select-form label="Search for:"
+                :options="search_for"/>
             </div>
             <div>
-              <div className="font-normal text-[16px] text-left">
-                Time frame:
-              </div>
-              <div className="h-[44px] mr-2 mb-2">
-                  <v-select label="Time Frame"
-                            :items="[
-                              'Last 7 days',
-                              'Last 15 days',
-                              'Last Month',
-                              'Last 3 months',
-                              'Last 6 months',
-                            ]"
-                            v-model="time_frame"
-                            variant="outlined"
-                            density="compact" />
-              </div>
+              <select-form label="Time frame:"
+                :options="time_frame"/>
             </div>
             <div>
-              <div className="font-normal text-[16px] text-left">
-                City:
-              </div>
-              <div className="h-[44px] mr-2 mb-2">
-                <v-select label="Search city name"
-                          :items="[
-                            'City A',
-                            'City B',
-                            'City C',
-                            'City D',
-                            'City E',
-                          ]"
-                          variant="outlined"
-                          density="compact" />
-              </div>
+              <select-form label="City:"
+                :options="cities"/>
             </div>
           </div>
         </div>
@@ -105,30 +59,89 @@
 <script>
 import { mapActions } from 'vuex';
 import BaseIcon from '../../items/BaseIcon.vue'
+import SelectForm from '../../../src/assets/components/forms/SelectForm.vue'
+// import SelectDate from '../../../src/assets/components/forms/SelectDate.vue'
+import Datepicker from 'vuejs3-datepicker'
 
 export default {
   name: 'OrdersFilterComponent',
   data() {
     return {
       isShow: true,
-      start_date: new Date(),
-      end_date: new Date(),
-      status: '',
+      start_date: '',
+      end_date: '',
+      search_for: [
+        {'id': 1, 'name': 'Parking ID'},
+        {'id': 2, 'name': 'Client'},
+        {'id': 3, 'name': 'Host'},
+        {'id': 4, 'name': 'Status'},
+        {'id': 5, 'name': 'City'},
+      ],
+      cities: [
+        {'id': 1, 'name': 'City A'},
+        {'id': 2, 'name': 'City B'},
+        {'id': 3, 'name': 'City C'},
+        {'id': 4, 'name': 'City D'},
+        {'id': 5, 'name': 'City E'},
+      ],
+      time_frame: [
+        {'id': 1, 'name': 'Last 7 days'},
+        {'id': 2, 'name': 'Last 15 days'},
+        {'id': 3, 'name': 'Last Month'},
+        {'id': 4, 'name': 'Last 3 months'},
+        {'id': 5, 'name': 'Last 6 months'},
+      ],
     };
   },
   components: {
-    BaseIcon
+    BaseIcon,
+    SelectForm,
+    // SelectDate,
+    Datepicker,
   },
   methods: {
     ...mapActions('Booking', ['Filter_Booking']),
+    refreshPage() {
+      window.location.reload();
+    },
     Search() {
+      if(this.time_frame) {
+        switch(this.time_frame) {
+          case 'Last 7 days':
+            this.time_frame = 1;
+            break;
+          case 'Last 15 days':
+            this.time_frame = 2;
+            break;
+          case 'Last Month':
+            this.time_frame = 3;
+            break;
+          case 'Last 3 months':
+            this.time_frame = 4;
+            break;
+          case 'Last 6 months':
+            this.time_frame = 5;
+            break;
+        }
+      }
       this.Filter_Booking({
         start_date: this.start_date,
         end_date: this.end_date,
         time_frame: this.time_frame,
         status: this.status,
+        city: this.city,
       });
     }
-  }
+  },
 };
 </script>
+
+<style>
+.vuejs3-datepicker__value {
+  width: 100% !important;
+  white-space: nowrap;
+  overflow: hidden;
+  min-width: 50px !important;
+  padding: 8px 12px !important;
+}
+</style>

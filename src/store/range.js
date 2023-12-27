@@ -1,11 +1,13 @@
 /* eslint-disable */
 
 import api from '@/utils/api';
+import axios from 'axios';
 
 export const RangesModule = {
     namespaced: true,
     state: {
         ranges: {},
+        geo_address_list: [],
     },
     getters: {
         Get_Ranges: state => {
@@ -27,6 +29,12 @@ export const RangesModule = {
         Delete_Range: (state, id) => {
             let index = state.ranges.findIndex((c) => c.id == id);
             state.ranges.splice(index, 1);
+        },
+        Get_GeoAddress: (state, data) => {
+            state.geo_address_list = data;
+        },
+        Format_GeoAddress: (state) => {
+            state.geo_address_list.splice(0, state.geo_address_list.length);
         },
     },
     
@@ -67,6 +75,18 @@ export const RangesModule = {
             .catch(err => {
                 console.log(err.errors);
             });
+        },
+        Get_GeoAddress: async (context, data) => {
+            await axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${data}&format=json&apiKey=b36bcb8fe8234991b2878174abd2592f`)
+            .then(res => {
+                context.commit('Get_GeoAddress', res.data.results);
+            })
+            .catch(err => {
+                console.log(err.errors);
+            });
+        },
+        Format_GeoAddress: async (context) => {
+            context.commit('Format_GeoAddress');
         },
     },
 };

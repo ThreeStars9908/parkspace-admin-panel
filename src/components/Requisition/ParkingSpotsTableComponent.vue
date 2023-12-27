@@ -7,22 +7,15 @@
       scrollbar scrollbar-thumb-[#008AB6]
       scrollbar-track-[#D9D9D9] scrollbar-thumb-rounded">
       <div class="title"
-           className="flex flex-row justify-between h-[56px] mb-6">
+           className="flex flex-row justify-between gap-4 h-[56px] mb-6">
         <div className="flex flex-row">
           <div className="text-[16px] font-semibold text-left mb-[16px] mr-[20px] my-auto">
             Parking spots requisitions
           </div>
-          <div className="flex flex-row justify-start bg-[#F8F8F8]
-            rounded-3xl border-solid border-2 border-[#C9C9C9]">
-            <base-icon name="fa fa-search" class="relative ml-4 mr-2 my-auto"/>
-            <input type="text"
-              v-model="search"
-              placeholder="Search"
-              aria-label="search"
-              class="px-2 py-2 rounded-r-3xl">
-          </div>
+          <search-form v-model:value="search"
+            placeholder="search" />
         </div>
-        <div className="flex flex-row">
+        <!-- <div className="flex flex-row">
           <div className="w-[230px] text-right mb-[16px] mr-[40px]">
             <v-select label="Filter"
                       :items="this.items"
@@ -30,7 +23,7 @@
                       @click="FilterSort"
                       variant="outlined" />
           </div>
-        </div>
+        </div> -->
       </div>
       <table class="table-auto w-full text-sm text-center">
         <thead className="text-md text-left border-b-[1px] border-[#C9C9C9]">
@@ -60,7 +53,7 @@
 </template>
 
 <script>
-import BaseIcon from '../../items/BaseIcon.vue'
+import SearchForm from '@/assets/components/forms/SearchForm.vue';
 import { mapState } from 'vuex';
 import ParkingSpotsTableItemComponent from './ParkingSpotsTableItemComponent.vue';
 
@@ -68,7 +61,7 @@ export default {
   name: 'ParkingSpotsTableComponent',
   components: {
     ParkingSpotsTableItemComponent,
-    BaseIcon
+    SearchForm,
   },
   data() {
     return {
@@ -87,8 +80,12 @@ export default {
   computed: {
     ...mapState('ParkingSlots', ['parking_slotsAll']),
     onFilter() {
-      return this.parking_slotsAll;
-      // return this.parking_slotsAll.filter(item => item.user.name.includes(this.search));
+      // return this.parking_slotsAll;
+      if(Array.isArray(this.parking_slotsAll)) {
+        return this.parking_slotsAll.filter(item => item.user.email.toLowerCase().includes(this.search.toLowerCase()));
+      } else {
+        return [];
+      }
     }
   },
   methods: {

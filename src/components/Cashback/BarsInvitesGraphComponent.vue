@@ -3,7 +3,7 @@
     <div className="h-[240px] p-6
     shadow-[4px_6px_30px_0px_#00000020] flex flex-col justify-between">
       <div className="text-[16px] font-semibold text-[#3F3F44] text-left">
-        Invites data
+        {{ $t('invites') }} {{ $t('data') }}
       </div>
       <Bar :data="values"
            :options="options"
@@ -42,7 +42,7 @@ export default {
           {
             label: 'Values',
             backgroundColor: ['#EDBD3A', '#008AB6'],
-            data: [50000, 120000],
+            data: [0, 0],
           },
         ],
       },

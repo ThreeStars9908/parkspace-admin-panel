@@ -4,11 +4,12 @@
             text-left shadow-[4px_6px_40px_0px_#00000020]">
             <input-form
                 type="terms"
+                :disabled="this.isEdit"
                 placeholder="Terms of Use"
                 v-model:value="termsofUseData.terms_conditions"
             />
             <div className="flex flex-row justify-end">
-                <icon-button title="Save" icon="fa fa-floppy-disk" color="#F9F9F9" :mobile="isMobile"
+                <icon-button title="button.save" icon="fa fa-floppy-disk" color="#F9F9F9" :mobile="isMobile"
                     @click="onSave" />
             </div>
         </div>
@@ -34,6 +35,7 @@ export default {
             isMobile: false,
         }
     },
+    props: ['isEdit'],
     computed: {
         ...mapState('Documentation', ['termsofUseData', 'success', 'errors']),
     },
@@ -45,7 +47,7 @@ export default {
         window.removeEventListener('resize', this.onResize);
     },
     methods: {
-        ...mapActions('Documentation', ['Edit_TermsofUseData']),
+        ...mapActions('Documentation', ['Save_TermsData']),
         onResize() {
             if (window.innerWidth <= 768) {
                 this.isMobile = true;
@@ -54,7 +56,8 @@ export default {
             }
         },
         async onSave() {
-            await this.Edit_TermsofUseData(this.termsofUseData);
+            await this.Save_TermsData(this.termsofUseData);
+            this.$emit('ChangeTermsofUse', false);
             if(this.errors)
                 toast.error(this.errors);
             if(this.success)

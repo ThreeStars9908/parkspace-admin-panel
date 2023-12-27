@@ -2,7 +2,7 @@
     <div class="bar-graph">
         <div className="h-full shadow-[4px_6px_30px_0px_#00000020] px-6 py-8">
             <div className="text-left font-semibold mb-4">
-                Subscription data
+                {{ $t('subscription') }} {{ $t('data') }}
             </div>
             <div className="mb-2">
                 <Bar :data="values"
@@ -48,7 +48,7 @@ export default {
                     {
                         label: 'Values',
                         backgroundColor: ['#17BEBF', '#008AB6'],
-                        data: [6000, 10000],
+                        data: [0, 0],
                     },
                 ],
             },

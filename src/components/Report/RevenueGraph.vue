@@ -69,13 +69,13 @@ export default {
                 ],
                 datasets: [
                     {
-                        label: 'Washes',
+                        label: 'Bookings',
                         backgroundColor: '#1486CA',
-                        data: [3, 7, 4, 3, 7, 4, 3, 7, 4, 3, 7, 4],
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     }, {
                         label: 'Profit',
                         backgroundColor: '#79CCFF',
-                        data: [4, 3, 5, 4, 3, 5, 4, 3, 5, 4, 3, 5],
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                     },
                 ],
             },

@@ -10,7 +10,7 @@
            className="flex flex-row justify-between h-[56px] mb-6">
         <div className="flex flex-row">
           <div className="text-[16px] font-semibold text-left mb-[16px] mr-[20px] my-auto">
-            Subscription history
+            {{ $t('subscription') }} {{ $t('history') }}
           </div>
         </div>
         <div className="flex flex-row">
@@ -37,9 +37,9 @@
           </tr>
         </thead>
         <tbody className="font-light">
-          <subscription-table-item-component
+          <!-- <subscription-table-item-component
             v-for="(item, index) in subscriptions" v-bind:key="index"
-            :obj="item"/>
+            :obj="item"/> -->
         </tbody>
       </table>
     </div>
@@ -48,11 +48,11 @@
 
 <script>
 import { mapState } from 'vuex';
-import SubscriptionTableItemComponent from './SubscriptionTableItemComponent.vue';
+// import SubscriptionTableItemComponent from './SubscriptionTableItemComponent.vue';
 
 export default {
   name: 'SubscriptionGeralTableComponent',
-  components: { SubscriptionTableItemComponent },
+  // components: { SubscriptionTableItemComponent },
   data() {
     return {
       items: ['Alphabetical', 'ID'],

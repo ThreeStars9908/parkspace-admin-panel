@@ -14,7 +14,6 @@
           @click="Add_ClientPayment({
             id: selected_client.id,
             email: '',
-            method: '',
           })">
          <base-icon name="fa fa-plus-circle" color="#008AB6" />
             <span class="ml-2">Add new</span>
@@ -36,12 +35,6 @@
           <base-icon name="fa fa-pen" color="#008AB6" />
           <span class="ml-2">Edit</span>
         </div>
-      </div>
-      <div className="text-left text-[#3F3F44]">
-        Payment method
-        <input v-model="item.method"
-          className="h-[16px] w-full rounded-lg px-4 py-6 mb-4
-          bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
       </div>
       <div className="text-left text-[#3F3F44]">
         E-mail

@@ -5,26 +5,29 @@
             className="w-full rounded-lg p-4 mb-4
             text-left shadow-[4px_6px_40px_0px_#00000020]">
             <div className="flex flex-row justify-between">
-                <div className="font-semibold mb-4">Question</div>
+                <div className="font-semibold mb-4">{{ $t('question') }}</div>
                 <div className="ml-auto flex flex-row">
-                    <text-button title="Edit" icon="fa fa-pen" :mobile="isMobile" />
-                    <text-button title="Delete" icon="fa fa-trash-can" :mobile="isMobile"
+                    <text-button title="edit" icon="fa fa-pen" :mobile="isMobile"
+                        @click="isEdit = true"/>
+                    <text-button title="delete" icon="fa fa-trash-can" :mobile="isMobile"
                         @click="onDelete(item)"/>
                 </div>
             </div>
             <input-form
                 type="question"
-                placeholder="Question"
+                placeholder="question"
+                :disabled="isEdit"
                 v-model:value="item.question"
             />
-            <div className="font-semibold mb-4">Answer</div>
+            <div className="font-semibold mb-4">{{ $t('answer') }}</div>
             <input-form
                 type="answer"
-                placeholder="Answer"
+                placeholder="answer"
+                :disabled="isEdit"
                 v-model:value="item.answer"
             />
             <div className="flex flex-row justify-end">
-                <icon-button title="Save Question" icon="fa fa-floppy-disk" color="#F9F9F9" :mobile="isMobile"
+                <icon-button title="save_question" icon="fa fa-floppy-disk" color="#F9F9F9" :mobile="isMobile"
                     @click="onSave(item)"/>
             </div>
         </div>
@@ -50,6 +53,7 @@ export default {
     data() {
         return {
             isMobile: false,
+            isEdit: false,
         }
     },
     computed: {
@@ -73,6 +77,7 @@ export default {
         },
         async onSave(data) {
             await this.Edit_FAQData(data);
+            this.isEdit = false;
             if(this.errors)
                 toast.error(this.errors);
             if(this.success)

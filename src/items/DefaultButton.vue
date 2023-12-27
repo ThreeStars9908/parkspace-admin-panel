@@ -2,7 +2,7 @@
     <button className="font-semibold rounded-lg py-2 px-6 mb-2 cursor-pointer hover:shadow-lg min-w-[160px]
         border-solid border-2 border-[#008AB6]"
         :style="`background-color: ${bgcolor}; color: ${color};`">
-        {{ title }}
+        {{ $t(`${title}`) }}
     </button>
 </template>
 

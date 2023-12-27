@@ -21,8 +21,9 @@ export const HostsModule = {
             state.new_host ++;
         },
         Update_Host: (state, data) => {
-            let index = state.hosts.findIndex((c) => c.id == data.id);
-            state.hosts[index] = data;
+            let index = state.hosts.findIndex((c) => c.id == data.user.id);
+            console.log(state.hosts[index]);
+            state.hosts[index] = data.user;
         },
         Delete_Host: (state, id) => {
             let index = state.hosts.findIndex((c) => c.id == id);
@@ -83,6 +84,33 @@ export const HostsModule = {
             })
             .then(res => {
                 context.commit('Update_Host', data);
+            })
+            .catch(err => {
+                console.log(err.errors);
+            });
+        },
+        Edit_HostData: async (context, data) => {
+            await api.put(`/api/auth/admin/hosts/profile/${data.id}`, data)
+            .then(res => {
+                context.commit('Update_Host', res.data);
+            })
+            .catch(err => {
+                console.log(err.errors);
+            })
+        },
+        Change_Host_Avatar: async (context, data) => {
+            const formData = new FormData();
+            formData.append("photo", data.avatar);
+            formData.append("id", data.id);
+            await api.put(`/api/auth/admin/hosts/avatar/${data.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+            .then(res => {
+                console.log(res.data);
+                context.commit('Update_Host', res.data);
+                context.commit('Select_Host', res.data);
             })
             .catch(err => {
                 console.log(err.errors);

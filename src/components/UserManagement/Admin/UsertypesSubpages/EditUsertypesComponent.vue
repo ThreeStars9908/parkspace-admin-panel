@@ -24,11 +24,11 @@
                             className="h-fit w-full rounded-lg px-4 py-2
                             bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
                     </div>
-                    <div className="w-[241px] p-2 mr-2 bg-[#008AB6]
+                    <div className="w-[241px] p-4 mr-2 bg-[#008AB6]
                     text-white rounded-lg cursor-pointer
                     m-auto font-semibold" @click="SaveNewUserType">
-                        <v-icon name="bi-check2-square"
-                            scale="1.25" fill="white" />
+                        <base-icon name="fa-regular fa-check-square"
+                            color="#F8F8F8" />
                         Save new user type
                     </div>
                 </div>
@@ -62,8 +62,8 @@
             </table>
         </div>
         <div className="float-right mt-4 mr-4 cursor-pointer" @click="this.$emit('deleteUsertype', true)">
-            <v-icon name="bi-trash"
-                scale="1.25" fill="#008AB6" />
+            <base-icon name="fa fa-trash-can"
+                color="#008AB6" />
             <span className="text-[#008AB6] ml-4">Delete user type</span>
         </div>
     </div>

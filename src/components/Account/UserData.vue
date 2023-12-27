@@ -3,31 +3,31 @@
     <div class="header"
         className="flex flex-row justify-between mb-2">
         <div className="text-left font-semibold">
-            User data
+            {{ $t('user_data') }}
         </div>
-        <text-button title="Edit" icon="fa fa-pen" :mobile="isMobile" />
+        <text-button title="edit" icon="fa fa-pen" :mobile="isMobile" />
     </div>
     <div class="block"
         className="p-6 mb-4 shadow-[4px_6px_40px_0px_#00000020] rounded-lg">
-        <div className="font-semibold text-left mb-4">Full name</div>
+        <div className="font-semibold text-left mb-4">{{ $t('form.full_name') }}</div>
         <input-form
             type="text"
-            placeholder="Name"
+            placeholder="form.name"
             v-model:value="adminData.name"
         />
-        <div className="font-semibold text-left mb-4">Telephone</div>
+        <div className="font-semibold text-left mb-4">{{ $t('form.telephone') }}</div>
         <input-form
             type="text"
-            placeholder="Telephone"
+            placeholder="form.telephone"
             v-model:value="adminData.cellphone"
         />
-        <div className="font-semibold text-left mb-4">E-mail</div>
+        <div className="font-semibold text-left mb-4">{{ $t('form.email') }}</div>
         <input-form
             type="text"
-            placeholder="E-mail"
+            placeholder="form.email"
             v-model:value="adminData.email"
         />
-        <default-button title="Save Changes" @click="onSave" />
+        <default-button title="button.save_changes" @click="onSave" />
     </div>
     <v-dialog v-model="isSave"
         width="auto">
@@ -35,13 +35,16 @@
     </v-dialog>
   </div>
 </template>
-
+<!-- eslint-disable -->
 <script>
 import { mapState } from 'vuex';
 import TextButton from '../../items/TextButton.vue';
 import DefaultButton from '../../items/DefaultButton.vue';
 import InputForm from '../../items/InputForm.vue';
 import ChangeUserDialog from './ChangeUserDialog.vue'
+
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
     name: 'UserData',
@@ -61,10 +64,21 @@ export default {
     },
     methods: {
         onSave() {
-            this.isSave = true;
+            if(this.validateEmail(this.adminData.email)) {
+                toast.error('Invalid email');
+            } else {
+                this.isSave = true;
+            }
         },
         saveUserdata(val) {
             this.isSave = val;
+        },
+        validateEmail(email) {
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                return false;
+            } else {
+                return true;
+            }
         },
     },
 }

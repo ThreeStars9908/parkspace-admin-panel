@@ -9,7 +9,17 @@
             <div className="w-[40%] flex flex-col justify-start">
                 <span className="mb-2">Country active</span>
                 <input v-model="newRange.name" placeholder="Country name"
+                    @keyup="Get_GeoAddress(newRange.name)"
                     className="bg-[#F8F8F8] rounded-lg p-2 w-full">
+                <div v-if="geo_address_list.length"
+                    class="py-2 z-50 bg-white border-solid border-2">
+                    <div v-for="(el, id) in geo_address_list"
+                        :key="id"
+                        className="text-sm border-b-2 mb-2 p-2"
+                        @click="Select_Address(el)">
+                        {{ el.formatted }}
+                    </div>
+                </div>
             </div>
             <div className="w-[60%] flex flex-col justify-between gap-2 mb-2">
                 <span>Price per time (Country)</span>
@@ -54,14 +64,17 @@
         </div>
         <div className="mt-4 rounded-lg m-auto py-3 w-[272px] 
             font-semibold bg-[#008AB6] text-white cursor-pointer"
-            @click="Add_Range(newRange), this.$emit('showAddNewRegions', false);">
+            @click="onAdd">
             Add new region and country
         </div>
     </div>
 </template>
 <!-- eslint-disable -->
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
+
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
     name: 'AddnewRegionsBlockComponent',
@@ -79,8 +92,20 @@ export default {
             time: [ '7 days', '15 days', '30 days' ],
         };
     },
+    computed: {
+        ...mapState('Ranges', ['geo_address_list']),
+    },
     methods: {
-        ...mapActions('Ranges', ['Add_Range']),
+        ...mapActions('Ranges', ['Add_Range', 'Get_GeoAddress', 'Format_GeoAddress']),
+        onAdd() {
+            this.Add_Range(this.newRange);
+            toast.success('New region and country added!');
+            this.$emit('showAddNewRegions', false);
+        },
+        Select_Address(val) {
+            this.newRange.name = val.formatted;
+            this.Format_GeoAddress();
+        },
     },
 }
 </script>

@@ -3,7 +3,7 @@
         bg-[#008AB6] text-white cursor-pointer hover:shadow-lg">
         <base-icon v-if="!name"
             :name="icon" :color="color"/> 
-        <span v-if="!mobile" class="ml-4">{{ title }}</span>
+        <span v-if="!mobile" class="ml-4">{{ $t(`${title}`) }}</span>
     </button>
 </template>
 

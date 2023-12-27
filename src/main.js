@@ -29,6 +29,11 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import router from './router';
 import store from './store';
 
+import { createI18n } from 'vue-i18n'
+
+import { languages } from '../lang/index.js'
+const messages = Object.assign(languages)
+
 // import vSelect from "vue-select";
 // import "vue-select/dist/vue-select.css";
 
@@ -44,14 +49,22 @@ const vuetify = createVuetify({
     components,
     directives,
 });
-const baseUrl = 'http://18.209.133.159:3096/';  
+const baseUrl = 'http://192.168.2.10:3096/';  
 
 const app = createApp(App)
 app.config.globalProperties.$baseUrl = baseUrl;
+app.config.productionTip = false;
+
+const i18n = new createI18n({
+    locale: store.state.Configuration.selected_language,
+    messages,
+})
+// .use(VueI18n)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
     // .component("v-select", vSelect)
     .use(VueSidebarMenu)
+    .use(i18n)
     .use(TextClamp)
     .use(Vue3Toastify, { autoClose: 3000, })
     .use(store)

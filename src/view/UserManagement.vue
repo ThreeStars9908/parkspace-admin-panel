@@ -1,6 +1,6 @@
 <template>
     <div class="user_management">
-        <page-header title="User Management" />
+        <page-header title="user" />
         <div class="sub-menu"
             className="mt-4">
             <div className="mr-auto">
@@ -35,7 +35,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import PageHeader from '../items/PageHeader.vue';
+import PageHeader from '../../src/assets/components/headers/PageHeader.vue'
 import GeralAdminsSubpageComponent from '../components/UserManagement/Admin/GeralSubpage/GeralAdminsSubpageComponent.vue';
 import ClientSubPage from '../components/UserManagement/Client/ClientSubPage.vue'
 import HostSubPage from '../components/UserManagement/Host/HostSubPage.vue';

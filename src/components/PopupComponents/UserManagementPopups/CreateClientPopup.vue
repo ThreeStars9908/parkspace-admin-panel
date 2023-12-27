@@ -27,7 +27,7 @@
         E-mail
         <div className="ml-auto">
           <div className="w-[718px] h-fit rounded-lg">
-            <input v-model="new_client.email"
+            <input v-model="new_client.email" type="email"
                    className="h-[40px] w-full rounded-lg  px-4 py-6
                       bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
           </div>
@@ -100,9 +100,12 @@
     </div>
   </div>
 </template>
-
+<!-- eslint-disable -->
 <script>
 import { mapActions } from 'vuex';
+
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
   name: 'CreateClientPopup',
@@ -129,11 +132,27 @@ export default {
       this.isHiddenTwo = !this.isHiddenTwo;
     },
     Register() {
-      if (this.new_client.password === this.confirmPass) {
+      if(this.validateEmail(this.new_client.email)) {
+        toast.error('Invalid email');
+      } else if (this.new_client.password === '') {
+        toast.error('Password is empty');
+      } else if (this.confirmPass === '') {
+        toast.error('Confirm password is empty');
+      } else if (this.new_client.password !== this.confirmPass) {
+        toast.error('Passwords do not match');
+      } else {
+        toast.success('Client registered!');
         this.Add_Client(this.new_client);
         this.$emit('registerClients', false);
       }
     },
+    validateEmail(email) {
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                return false;
+            } else {
+                return true;
+            }
+        },
   },
 };
 </script>

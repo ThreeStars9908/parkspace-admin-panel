@@ -18,28 +18,28 @@
             </tr>
         </thead>
         <tbody>
-            <report-table-item :obj="objeto" />
+            <!-- <report-table-item :obj="objeto" /> -->
         </tbody>
     </table>
   </div>
 </template>
 
 <script>
-import ReportTableItem from './ReportTableItem.vue';
+// import ReportTableItem from './ReportTableItem.vue';
 
 export default {
     name: 'ReportTable',
     components: {
-        ReportTableItem,
+        // ReportTableItem,
     },
     data() {
         return {
             objeto: {
-                date: "2023-12-16",
-                bookings: 683,
-                profit: 28300,
-                payments: 4500,
-                markup: 80,
+                date: "",
+                bookings: '',
+                profit: '',
+                payments: '',
+                markup: '',
             },
         }
     },

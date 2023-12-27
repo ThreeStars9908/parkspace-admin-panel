@@ -4,7 +4,7 @@
             px-6 py-8 rounded-lg">
             <div className="flex flex-row justify-between">
                 <div className="text-left font-semibold">
-                    Appointments
+                    {{ $t('appointments') }}
                 </div>
                 <div className="text-right font-semibold">
                     0.00
@@ -34,11 +34,11 @@ export default {
     data() {
         return {
         values: {
-            labels: ['Cancelled', 'Completed', 'Ongoing'],
+            labels: [this.$t('cancelled'), this.$t('completed'), this.$t('ongoing')],
             datasets: [
             {
                 backgroundColor: ['#FBC820', '#1486CA', '#1C8E33', '#E5333E'],
-                data: [40, 20, 80, 10],
+                data: [0, 0, 0, 0],
             },
             ],
         },

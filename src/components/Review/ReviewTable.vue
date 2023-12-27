@@ -5,33 +5,26 @@
         scrollbar scrollbar-thumb-[#008AB6]
         scrollbar-track-[#D9D9D9] scrollbar-thumb-rounded">
         <div class="title"
-            className="flex flex-row justify-start mb-6">
-            <div className="text-left font-semibold mr-2">Latest reviews</div>
-            <div className="flex flex-row justify-start bg-[#F8F8F8]
-                rounded-3xl border-solid border-2 border-[#C9C9C9]">
-                <base-icon name="fa fa-search" class="relative ml-4 mr-2 my-auto"/>
-                <input type="text"
-                v-model="search"
-                placeholder="Search"
-                aria-label="search"
-                class="px-2 py-2 rounded-r-3xl">
-            </div>
+            className="flex flex-row justify-start mb-6 gap-4">
+            <div className="text-left font-semibold mr-2">{{ $t('latest') }} {{ $t('reviews') }}</div>
+            <search-form v-model:value="search"
+                placeholder="search" />
         </div>
         <div class="relative overflow-auto">
             <table class="w-full text-sm text-cneter">
                 <thead class="text-md text-left
                     border-b-[1px] border-[#C9C9C9]">
                     <tr>
-                        <th class="px-6 py-3 text-left min-w-[160px]">Parking slot</th>
-                        <th class="px-6 py-3 text-center">Client</th>
-                        <th class="px-6 py-3 text-center">Host</th>
-                        <th class="px-6 py-3 text-center min-w-[160px]">Review (to host)</th>
-                        <th class="px-6 py-3 text-center min-w-[160px]">Review (to client)</th>
-                        <th class="px-6 py-3 text-center min-w-[180px]">Review (from user to parkspace)</th>
-                        <th class="px-6 py-3 text-center min-w-[180px]">Review (from host to parkspace)</th>
-                        <th class="px-6 py-3 text-center min-w-[180px]">Review left for the parking space</th>
-                        <th class="px-6 py-3 text-center">Hide review</th>
-                        <th class="px-6 py-3 text-center">Actions</th>
+                        <th class="px-6 py-3 text-left min-w-[160px]">{{ $t('parking_slot') }}</th>
+                        <th class="px-6 py-3 text-center">{{ $t('client') }}</th>
+                        <th class="px-6 py-3 text-center">{{ $t('host') }}</th>
+                        <th class="px-6 py-3 text-center min-w-[160px]">{{ $t('review') }} ({{ $t('to') }} {{ $t('host') }})</th>
+                        <th class="px-6 py-3 text-center min-w-[160px]">{{ $t('review') }} ({{ $t('to') }} {{ $t('client') }})</th>
+                        <th class="px-6 py-3 text-center min-w-[180px]">{{ $t('review') }} ({{ $t('from') }} {{ $t('user') }} {{ $t('to') }} {{ $t('parkspace') }})</th>
+                        <th class="px-6 py-3 text-center min-w-[180px]">{{ $t('review') }} ({{ $t('from') }} {{ $t('host') }} {{ $t('to') }} {{ $t('parkspace') }})</th>
+                        <th class="px-6 py-3 text-center min-w-[180px]">{{ $t('review') }} left for the {{ $t('parkspace') }}</th>
+                        <th class="px-6 py-3 text-center">{{ $t('hide') }} {{ $t('review') }}</th>
+                        <th class="px-6 py-3 text-center">{{ $t('actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +44,7 @@
 </template>
 
 <script>
-import BaseIcon from '../../items/BaseIcon.vue'
+import SearchForm from '@/assets/components/forms/SearchForm.vue'
 import DeleteReview from './DeleteReview.vue'
 import ReviewsTableItem from './ReviewsTableItem.vue'
 
@@ -89,7 +82,7 @@ export default {
     },
     components: {
         ReviewsTableItem, DeleteReview,
-        BaseIcon
+        SearchForm,
     },
     methods: {
         deleteHs(val) {
@@ -98,7 +91,7 @@ export default {
     },
     computed: {
         onFilter() {
-            return this.objeto.filter(item => item.slot.includes(this.search));
+            return this.objeto.filter(item => item.slot.toLowerCase().includes(this.search.toLowerCase()));
         }
     }
 }

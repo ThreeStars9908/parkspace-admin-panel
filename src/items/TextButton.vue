@@ -3,7 +3,7 @@
         text-[#008AB6] cursor-pointer mr-2 ml-2 mb-2">
         <base-icon
             :name="icon" :color="color"/> 
-        <span v-if="!mobile" class="ml-2">{{ title }}</span>
+        <span v-if="!mobile" class="ml-2">{{ $t(`${title}`) }}</span>
     </div>
 </template>
 

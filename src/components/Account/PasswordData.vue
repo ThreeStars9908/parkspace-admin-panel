@@ -3,25 +3,25 @@
     <div class="header"
       className="flex flex-row justify-between mb-2">
         <div className="text-left font-semibold">
-            Password
+            {{ $t('form.password') }}
         </div>
-        <text-button title="Edit" icon="fa fa-pen" :mobile="isMobile" />
+        <text-button title="edit" icon="fa fa-pen" :mobile="isMobile" />
     </div>
     <div class="block"
       className="p-6 mb-4 shadow-[4px_6px_40px_0px_#00000020] rounded-lg">
-      <div className="font-semibold text-left mb-4">Password</div>
+      <div className="font-semibold text-left mb-4">{{ $t('form.password') }}</div>
       <input-form
         type="password"
-        placeholder="Password"
+        placeholder="form.password"
         v-model:value="info.password"
       />
-      <div className="font-semibold text-left mb-4">Confirm Password</div>
+      <div className="font-semibold text-left mb-4">{{ $t('form.confirm_password') }}</div>
       <input-form
         type="password"
-        placeholder="Confirm password"
+        placeholder="form.confirm_password"
         v-model:value="info.confirmPass"
       />
-      <default-button title="Save Changes" 
+      <default-button title="button.save_changes" 
         @click="onSave"/>
     </div>
     <v-dialog v-model="isSave"

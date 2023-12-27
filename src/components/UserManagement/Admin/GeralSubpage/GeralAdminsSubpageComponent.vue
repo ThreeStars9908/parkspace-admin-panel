@@ -11,13 +11,13 @@
                className="flex flex-row
                text-[16px] font-normal mt-4">
             <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
-            <div :className="['mr-[57px] cursor-pointer '
+            <div :className="['mr-4 cursor-pointer '
               + (this.isUser == 'registered' ? 'font-semibold' : '')]"
                  @click="changePage('registered')">
               Registered Admins
             </div>
             <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
-            <div :className="['mr-[57px] cursor-pointer '
+            <div :className="['mr-4 cursor-pointer '
               + (this.isUser == 'types' ? 'font-semibold' : '')]"
                  @click="changePage('types')">
               User Types
@@ -39,7 +39,7 @@
               <base-icon name="fa fa-plus-circle"
                          color="white"
                          scale="1.25" />
-              Register user type
+              <span v-if="!isClosed" class="ml-2">Register user type</span>
             </div>
             <div className="p-[12.5px] bg-[#008AB6]
             text-white rounded-[8px] cursor-pointer
@@ -48,18 +48,8 @@
               <base-icon name="fa fa-user-plus"
                          color="white"
                          scale="1.25" />
-              Register admin
+              <span v-if="!isClosed" class="ml-2">Register admin</span>
             </div>
-            <!-- <div className="w-fit h-fit
-              rounded-[10px] border-2
-               border-solid border-[#C9C9C9]
-               pl-3" v-if="isUser == 'types'">
-              <input type="text"
-                     v-model="search"
-                     placeholder="User type name"
-                     aria-label="User type name"
-                     className="rounded-[10px] px-2 py-3 w-[360px]">
-            </div> -->
           </div>
         </div>
       </div>
@@ -129,7 +119,15 @@ export default {
         'Admin',
         'SubAdmin',
       ],
+      isClosed: false,
     };
+  },
+  mounted() {
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onResize);
   },
   methods: {
     changePage(val) {
@@ -137,6 +135,13 @@ export default {
     },
     changeGeral(val) {
       this.isGeral = val;
+    },
+    onResize() {
+      if (window.innerWidth <= 768) {
+        this.isClosed = true;
+      } else {
+        this.isClosed = false;
+      }
     },
   },
 };

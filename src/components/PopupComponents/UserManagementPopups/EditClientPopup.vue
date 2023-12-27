@@ -10,7 +10,7 @@
         </div>
         <div className="cursor-pointer"
              @click="this.$emit('editClients', false)">
-          <v-icon name="io-close" />
+          <base-icon name="fa fa-close" />
         </div>
       </div>
       <div className="text-left text-[16px] font-normal text-[#3F3F44]">
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+import BaseIcon from '@/items/BaseIcon.vue';
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -71,6 +72,9 @@ export default {
   data() {
     return {
     };
+  },
+  components: {
+    BaseIcon,
   },
   computed: {
     ...mapState('Clients', ['selected_client']),

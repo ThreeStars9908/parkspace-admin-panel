@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import DataBlock from '../../../items/DataBlock.vue'
 
 import EditClientSubpageComponent from './EditSubpage/EditClientSubpageComponent.vue'
@@ -75,6 +75,7 @@ export default {
     ...mapState('Clients', ['total_client', 'new_client']),
     },
     methods: {
+        ...mapActions('Clients', ['Get_Clients']),
         registerClients(val) {
             this.registerClient = val;
         },
@@ -84,6 +85,9 @@ export default {
         deleteClients(val) {
             this.deleteClient = val;
         },
-    }
+    },
+    created() {
+        this.Get_Clients();
+    },
 }
 </script>

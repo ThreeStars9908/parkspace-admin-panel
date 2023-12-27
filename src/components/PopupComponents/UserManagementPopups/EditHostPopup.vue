@@ -61,14 +61,12 @@
             <input v-model="selected_host.dni_file"
                    className="w-full px-[10px] py-3">
             <a :href="$baseUrl + `${selected_host.dni_file}`" target="_blank">
-              <v-icon name="bi-eye"
-                    scale="1.25" fill="black"
-                    class="cursor-pointer absolute -ml-20 mt-3"/>
+            <base-icon name="fa fa-eye"
+              class="cursor-pointer absolute -ml-20 mt-3"/>
             </a>
-            <v-icon name="md-upload"
-                    scale="1.25" fill="black"
-                    class="cursor-pointer absolute -ml-10 mt-3"
-                    @click="onUpload"/>
+            <base-icon name="fa fa-upload"
+              class="cursor-pointer absolute -ml-10 mt-3"
+              @click="onUpload"/>
             <input type="file" ref="fileinput" style="display: none;"
               @change="Uploaded" />
           </div>
@@ -102,6 +100,7 @@
 </template>
 <!-- eslint-disable -->
 <script>
+import BaseIcon from '../../../items/BaseIcon.vue'
 import { mapState, mapActions } from 'vuex';
 
 export default {
@@ -109,6 +108,9 @@ export default {
   data() {
     return {
     };
+  },
+  components: {
+    BaseIcon,
   },
   computed: {
     ...mapState('Hosts', ['selected_host']),

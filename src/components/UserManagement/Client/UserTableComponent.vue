@@ -6,36 +6,21 @@
       scrollbar scrollbar-thumb-[#008AB6]
       scrollbar-track-[#D9D9D9] scrollbar-thumb-rounded">
       <div class="title"
-           className="grid grid-cols-1 lg:grid-cols-2 h-[56px] gap-4 mb-6">
-        <div className="flex flex-row justify-start">
+           className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-3 gap-4">
           <div className="text-[16px] font-semibold text-left mb-[16px] mr-[20px] my-auto">
             Registered clients
           </div>
-            <div className="w-fit h-fit rounded-xl
-                border-solid border-2 border-[#C9C9C9]
-                pl-3">
-                <base-icon name="fa fa-search" class="relative ml-4 mr-2 my-auto"/>
-              <input type="text"
-                    v-model="search"
-                    placeholder="Search"
-                    aria-label="search"
-                    className="ml-3 px-3 py-3 rounded-r-3xl">
-            </div>
+          <search-form v-model:value="search"
+            placeholder="search" />
         </div>
-        <div className="flex flex-row justify-end">
-          <div className="w-[230px] text-right mr-[40px]">
-            <select v-model="filter" @change="FilterSort"
-              class="bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED] py-2 px-4 rounded-lg">
-              <option v-for="(item, index) in items" v-bind:key="index" :value="index">{{ item }}</option>
-            </select>
-          </div>
+        <div className="ml-auto">
           <div className="text-right">
             <icon-button title="Register client"
               icon="fa-solid fa-user-plus" color="#F9F9F9"
               @click="this.$emit('registerClients', true);"/>
           </div>
         </div>
-
       </div>
       <table class="table-auto w-full
         text-sm text-[#3F3F44]
@@ -63,39 +48,58 @@
 </template>
 
 <script>
-import BaseIcon from '../../../items/BaseIcon.vue';
-import { mapState } from 'vuex';
-import IconButton from '../../../items/IconButton.vue';
+import SearchForm from '../../../assets/components/forms/SearchForm.vue';
+import IconButton from '../../../items/IconButton.vue'
+import { mapState, mapActions } from 'vuex';
 import UserTableItemComponent from './UserTableItemComponent.vue';
 
 export default {
   name: 'UserTableComponent',
   components: { 
     UserTableItemComponent,
+    SearchForm,
     IconButton,
-    BaseIcon,
   },
   data() {
     return {
       items: ['Alphabetical', 'ID'],
       search: '',
       filter: '',
+      isClosed: false,
     };
   },
   computed: {
     ...mapState('Clients', ['clients']),
     onFilter() {
-      return this.clients.filter(item => item.name.includes(this.search));
+      return this.clients.filter(item => item.name.toLowerCase().includes(this.search.toLowerCase()));
     },
   },
+  mounted() {
+    this.onResize();
+    window.addEventListener('resize', this.onResize);
+  },
+  beforeUnmount() {
+    window.removeEventListener('resize', this.onResize);
+  },
   methods: {
-    FilterSort() {
-      if(this.filter == 0) {
-        this.clients.sort((a, b) => b.name - a.name);
+    ...mapActions('Clients', ['Get_Clients']),
+    onResize() {
+      if (window.innerWidth <= 768) {
+        this.isClosed = true;
       } else {
-        this.clients.sort((a, b) => a.id - b.id);
+        this.isClosed = false;
       }
     },
-  }
+    // FilterSort() {
+    //   if(this.filter == 0) {
+    //     this.clients.sort((a, b) => b.name - a.name);
+    //   } else {
+    //     this.clients.sort((a, b) => a.id - b.id);
+    //   }
+    // },1
+  },
+  created() {
+    this.Get_Clients();
+  },
 };
 </script>

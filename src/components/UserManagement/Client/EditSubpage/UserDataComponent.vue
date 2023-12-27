@@ -24,7 +24,8 @@
                       checkedBg="#1C8E33" />
         </div>
         <div className="text-[#008AB6] font-medium text-[16px]
-        cursor-pointer text-right mr-4 my-auto">
+        cursor-pointer text-right mr-4 my-auto"
+          @click="onEdit">
           <base-icon name="fa fa-pen" color="#008AB6" />
           <span class="ml-2">Edit</span>
         </div>
@@ -133,7 +134,7 @@ export default {
     BaseIcon,
   },
   methods: {
-    ...mapActions('Clients', ['Change_ClientPassword', 'EnableStatus']),
+    ...mapActions('Clients', ['Change_ClientPassword', 'EnableStatus', 'Edit_Client']),
     changePass() {
       this.isHiddenOne = !this.isHiddenOne;
     },
@@ -149,6 +150,10 @@ export default {
       toast.success('Password changed successfully!');
       this.changepassword = false;
     },
+    onEdit() {
+      this.Edit_Client(this.selected_client);
+      toast.success('User edited successfully!');
+    }
   },
 };
 </script>

@@ -49,7 +49,7 @@ export default {
                     {
                         label: 'Values',
                         backgroundColor: ['#1486CA', '#008AB6', '#29CFCF'],
-                        data: [8000, 6500, 2400],
+                        data: [0, 0, 0],
                     },
                 ],
             },

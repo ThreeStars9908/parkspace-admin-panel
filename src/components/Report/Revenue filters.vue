@@ -9,45 +9,32 @@
             <!-- eslint-disable-next-line vuejs-accessibility/click-events-have-key-events -->
             <div @click="isShow = !isShow"
                  className="cursor-pointer">
-              <base-icon :name="!isShow ? 'fa fa-arrow-down' : 'fa fa-arrow-up'" />
+              <base-icon :name="!isShow ? 'fa fa-angle-down' : 'fa fa-angle-up'" />
             </div>
           </div>
           <div className="mt-6"
                v-show="isShow">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 justify-between">
-              <div>
-                <div className="font-normal text-[16px] text-left">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:justify-items-start">
+                <label className="block text-left mb-2">
                   Filter to date:
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-5 items-center">
-                  <div className="mr-2 mb-2 col-span-2">
-                    <VueDatePicker v-model="start_date"
-                                  :enable-time-picker="false" />
-                  </div>
-                  <div className="">to:</div>
-                  <div className="mr-2 mb-2 col-span-2">
-                    <VueDatePicker v-model="start_date"
-                                  :enable-time-picker="false"
-                                  style="height = 44px;" />
-                  </div>
+                </label>
+                <div className="col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <datepicker v-model="start_date"
+                    class="text-left"></datepicker>
+                  <datepicker v-model="end_date"
+                    class="text-left"></datepicker>
                 </div>
               </div>
-              <div>
-                <div className="font-normal text-[16px] text-left">
-                  Or search for period:
-                </div>
-                <div className="h-[44px] mr-2 mb-2">
-                    <v-select label="Last 7 days"
-                              :items="[
-                                'Last 7 days',
-                                'Last 15 days',
-                                'Last Month',
-                                'Last 3 months',
-                                'Last 6 months',
-                              ]"
-                              variant="outlined"
-                              density="compact" />
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end justify-items-end">
+                  <label class="block text-left mb-2">
+                      Or search for period:
+                  </label>
+                  <select class="bg-gray-50 border border-gray-300 text-gray-900
+                      text-sm rounded-lg block w-full p-2">
+                      <option v-for="(item, index) in time_frame"
+                          v-bind:key="index" :value="item.id">{{ item.name }}</option>
+                  </select>
               </div>
             </div>
           </div>
@@ -67,20 +54,40 @@
   </template>
   
   <script>
+  import Datepicker from 'vuejs3-datepicker'
+  // import SelectForm from '../../../src/assets/components/forms/SelectForm.vue'
   import BaseIcon from '../../items/BaseIcon.vue'
   
   export default {
     name: 'RevenueFilters',
     data() {
       return {
+        time_frame: [
+          {'id': 1, 'name': 'Last 7 days'},
+          {'id': 2, 'name': 'Last 15 days'},
+          {'id': 3, 'name': 'Last Month'},
+          {'id': 4, 'name': 'Last 3 months'},
+          {'id': 5, 'name': 'Last 6 months'},
+        ],
         isShow: true,
         start_date: new Date(),
         end_date: new Date(),
       };
     },
     components: {
-      BaseIcon
+      BaseIcon,
+      // SelectForm,
+      Datepicker,
     }
   };
   </script>
-  
+
+  <style>
+
+  .vuejs3-datepicker__value {
+    white-space: nowrap;
+    overflow: hidden;
+    min-width: 50px !important;
+    padding: 8px 12px !important;
+  }
+  </style>

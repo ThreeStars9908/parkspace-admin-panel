@@ -30,7 +30,8 @@
             <th className="px-6 py-3 text-center">Transaction<br>Details</th>
           </tr>
         </thead>
-        <tbody className="font-light">
+        <tbody className="font-light"
+          v-if="this.all_booking.length">
           <orders-table-item-component v-for="(item, index) in all_booking"
                                        v-bind:key="index"
                                        :obj="item"

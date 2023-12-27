@@ -58,8 +58,7 @@
         float-right text-white rounded-lg
         mt-4 mr-4 font-semibold cursor-pointer"
             @click="SaveNewUserType">
-            <v-icon name="bi-check2-square"
-                scale="1.25" fill="white" />
+            <base-icon name="fa fa-check-square" />
             Save new user type
         </div>
     </div>

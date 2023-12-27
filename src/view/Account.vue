@@ -1,6 +1,6 @@
 <template>
     <div class="account">
-        <page-header title="My Account" />
+        <page-header title="account" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 xl:gap-16 mt-8">
             <user-data />
             <password-data />
@@ -10,7 +10,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import PageHeader from '../items/PageHeader.vue';
+import PageHeader from '../../src/assets/components/headers/PageHeader.vue'
 import UserData from '../components/Account/UserData.vue';
 import PasswordData from '../components/Account/PasswordData.vue';
 

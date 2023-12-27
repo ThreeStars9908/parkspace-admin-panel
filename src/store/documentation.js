@@ -4,8 +4,14 @@ export const DocumentationModule = {
     namespaced: true,
     state: {
         faqData: [],
-        cancellationTermsData: {},
-        termsofUseData: {},
+        cancellationTermsData: {
+            type: 'cancellation',
+            terms_conditions: '',
+        },
+        termsofUseData: {
+            type: 'terms_of_use',
+            terms_conditions: '',
+        },
         errors: null,
         success: null,
     },
@@ -27,11 +33,26 @@ export const DocumentationModule = {
             data.sort((a, b) => b.id - a.id);
             state.faqData = data;
         },
-        Set_CancellationTermsData: (state, data) => {
-            state.cancellationTermsData = data;
+        Set_TermsData: (state, data) => {
+            if (data) {
+                data.forEach(element => {
+                    if(element.type == 'cancellation')
+                        state.cancellationTermsData = element;
+                    else if(element.type == 'terms_of_use')
+                        state.termsofUseData = element;
+                });
+            } else {
+                state.success = null;
+                state.errors = 'Terms and Conditions does not exist!';
+            }
         },
-        Set_TermsofUseData: (state, data) => {
-            state.termsofUseData = data;
+        Save_TermsData: (state, data) => {
+            if (data) {
+                if(data.type == 'cancellation')
+                    state.cancellationTermsData = data;
+                else if(data.type == 'terms_of_use')
+                    state.termsofUseData = data;
+            }
         },
         Add_FAQData: (state, data) => {
             state.faqData.unshift(data);
@@ -70,8 +91,7 @@ export const DocumentationModule = {
         Show_TermsData: async (context) => {
             await api.get('/api/faq-terms/terms')
             .then(res => {
-                context.commit('Set_CancellationTermsData', res.data[0]),
-                context.commit('Set_TermsofUseData', res.data[1]);
+                context.commit('Set_TermsData', res.data);
             })
             .catch(err => {
                 context.commit('Get_Errors', err.errors);
@@ -116,20 +136,11 @@ export const DocumentationModule = {
                 context.commit('Get_Errors', err.errors);
             });
         },
-        Edit_CancellationTermsData: async (context, data) => {
-            await api.put(`/api/faq-terms/terms/${data.id}`, data)
+        Save_TermsData: async (context, data) => {
+            console.log(data);
+            await api.put('/api/faq-terms/terms/', data)
             .then(res => {
-                context.commit('Set_CancellationTermsData', res.data);
-                context.commit('Get_Success', 'Saved!');
-            })
-            .catch(err => {
-                context.commit('Get_Errors', err.errors);
-            });
-        },
-        Edit_TermsofUseData: async (context, data) => {
-            await api.put(`/api/faq-terms/terms/${data.id}`, data)
-            .then(res => {
-                context.commit('Set_TermsofUseData', res.data);
+                context.commit('Save_TermsData', res.data);
                 context.commit('Get_Success', 'Saved!');
             })
             .catch(err => {

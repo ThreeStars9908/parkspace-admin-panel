@@ -3,7 +3,7 @@
     <div className="w-full h-[240px] p-6
     shadow-[4px_6px_30px_0px_#00000020] flex flex-col justify-between">
       <div className="text-[16px] font-semibold text-[#3F3F44] text-left">
-        Cashback data
+        {{ $t('cashback') }} {{ $t('data') }}
       </div>
       <Bar :data="values"
            :options="options"
@@ -43,7 +43,7 @@ export default {
           {
             label: 'Values',
             backgroundColor: ['#17BEBF', '#EDBD3A', '#008AB6'],
-            data: [300, 400, 500],
+            data: [0, 0, 0],
           },
         ],
       },

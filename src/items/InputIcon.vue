@@ -1,7 +1,6 @@
 <template>
     <i :class="name"
-        style="font-size: 1.25em; color: #7A7A7A;"
-        class="absolute mt-3 -ml-9 cursor-pointer"></i>
+        style="font-size: 1.25em; color: #7A7A7A;"></i>
 </template>
 
 <script>
