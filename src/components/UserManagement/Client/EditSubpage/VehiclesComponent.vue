@@ -15,7 +15,7 @@
               id: selected_client.id,
               name: selected_client.name,
               brand: '',
-              type: '',
+              type: 'Micro',
               color: '',
               number: '',
             })">
@@ -48,10 +48,12 @@
       </div>
       <div className="text-left text-[#3F3F44] mb-4">
         Model
-        <input v-model="item.type"
-          :disabled="!isedit"
-          className="h-[16px] w-full rounded-lg px-4 py-6
-          bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
+        <select v-model="item.type" :disabled="!isedit"
+          class="bg-gray-50 border border-gray-300 text-gray-900
+          text-sm rounded-lg block w-full p-4">
+            <option v-for="(item, index) in vehicle_size_list"
+                v-bind:key="index" :value="item">{{ item }}</option>
+        </select>
       </div>
       <div className="text-left text-[#3F3F44] mb-4">
         Color
@@ -91,6 +93,9 @@ export default {
   data() {
     return {
       isedit: false,
+      vehicle: {
+
+      }
     };
   },
   components: {
@@ -98,7 +103,7 @@ export default {
   },
   computed: {
     ...mapState('Clients', ['selected_client', 'selected_client_car']),
-    ...mapState('ParkingSlots', ['vehicle_sizes']),
+    ...mapState('ParkingSlots', ['vehicle_size_list']),
   },
   methods: {
     ...mapActions('Clients', ['Add_Client_Car', 'Edit_Client_Car', 'Remove_Client_Car']),

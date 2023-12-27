@@ -30,6 +30,18 @@ export const ParkingSlotsModule = {
             'big_truck',
             'motor_cycle',
         ],
+        vehicle_size_list: [
+            'Micro',
+            'Hatchback',
+            'SUV',
+            'Pickup',
+            'Minivan',
+            'Van',
+            'Compervan',
+            'Truck',
+            'Big Truck',
+            'Moto cycle',
+        ],
     },
 
     mutations: {
@@ -48,6 +60,8 @@ export const ParkingSlotsModule = {
                             element.vehicle_size = JSON.parse(element.vehicle_size);
                         if(typeof element.payment_method === 'string')
                             element.payment_method = JSON.parse(element.payment_method);
+                        if(typeof element.images === 'string')
+                            element.images = JSON.parse(element.images);
                         const prices = [
                             {price: 0, time: 'monthly', type: 1},
                             {price: 0, time: 'weekend', type: 1},

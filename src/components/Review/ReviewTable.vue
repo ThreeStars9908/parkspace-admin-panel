@@ -28,10 +28,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <reviews-table-item v-for="(item, index) in onFilter"
+                    <!-- <reviews-table-item v-for="(item, index) in onFilter"
                         v-bind:key="index"
                         :obj="item"
-                        @deleteHs="deleteHs" />
+                        @deleteHs="deleteHs" /> -->
                 </tbody>
             </table>
         </div>
@@ -46,7 +46,7 @@
 <script>
 import SearchForm from '@/assets/components/forms/SearchForm.vue'
 import DeleteReview from './DeleteReview.vue'
-import ReviewsTableItem from './ReviewsTableItem.vue'
+// import ReviewsTableItem from './ReviewsTableItem.vue'
 
 export default {
     name: 'ReviewTable',
@@ -81,7 +81,8 @@ export default {
         }
     },
     components: {
-        ReviewsTableItem, DeleteReview,
+        // ReviewsTableItem,
+        DeleteReview,
         SearchForm,
     },
     methods: {
