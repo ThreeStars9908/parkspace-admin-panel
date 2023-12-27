@@ -49,7 +49,7 @@ const vuetify = createVuetify({
     components,
     directives,
 });
-const baseUrl = 'http://192.168.2.10:3096/';  
+const baseUrl = 'http://18.209.133.159:3096/';  
 
 const app = createApp(App)
 app.config.globalProperties.$baseUrl = baseUrl;
