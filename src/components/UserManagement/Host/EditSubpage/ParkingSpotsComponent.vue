@@ -71,7 +71,7 @@
                         <div className="ml-auto">
                             <div className="w-full h-fit rounded-lg
                             bg-[#F8F8F8] border-2 border-solid border-[#EBF0ED]">
-                                <input v-model="element.images"
+                                <input
                                     className="w-full rounded-lg px-[10px] py-3">
                                 <base-icon name="fa fa-eye"
                                     class="cursor-pointer relative -ml-10 mt-2" />
